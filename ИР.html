@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Индивидуальное развитие — Ростелеком</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--accent:#6600FF;--accent-hover:#5500D9;--accent-light:rgba(102,0,255,.08);--orange:#FF4F12;--orange-light:rgba(255,79,18,.08);--yellow:#FFBF07;--yellow-light:rgba(255,191,7,.2);--teal:#57D9B8;--teal-light:rgba(87,217,184,.15);--blue-light:#66BADE;--pink:#FFBFC2;--red:#E1320C;--bg:#f7f8fb;--card:#fff;--text:#1e293b;--text2:#5a6a7e;--border:#e2e6ef;--navy:#263B63;--navy-dark:#002060;--progress-bg:#e8ecf3}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:#fff;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-logo{width:32px;height:32px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.header-logo svg{width:20px;height:20px}
+.header h1{font-size:20px;font-weight:700;line-height:1.2}
+.header .sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:1px}
+
+.btn{padding:8px 16px;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+.btn-yellow{background:var(--yellow);color:var(--navy-dark)}
+.btn-yellow:hover{background:#f0b000}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff}
+.btn-outline:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-accent:hover{background:var(--accent-hover)}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-orange:hover{background:#e04400}
+.btn-sm{padding:5px 12px;font-size:12px}
+
+/* TABS */
+.tabs{display:flex;background:var(--card);border-bottom:1px solid var(--border);padding:0 32px;gap:0;overflow-x:auto;position:sticky;top:0;z-index:50}
+.tab{padding:14px 24px;border:none;background:none;font-size:14px;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--text);background:var(--accent-light)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.tab .tab-count{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:10px;background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;margin-left:6px}
+.tab.active .tab-count{background:var(--accent);color:#fff}
+
+/* CONTENT */
+.content{max-width:1100px;margin:0 auto;padding:28px 32px}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* PROCESS TIMELINE */
+.process-intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+.process-intro h2{font-size:16px;color:var(--navy-dark);margin-bottom:6px}
+.process-intro p{font-size:13px;color:var(--text2);line-height:1.5}
+.process-total-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--progress-bg);margin-top:14px}
+.process-total-bar .seg{height:100%;transition:width .4s}
+.process-total-bar .seg.complete{background:#7a8599}
+.process-total-bar .seg.partial{background:rgba(102,0,255,.2)}
+.process-total-bar .seg.empty{background:var(--progress-bg)}
+.user-progress-label{font-size:12px;color:var(--text2);margin-top:8px;display:flex;justify-content:space-between}
+
+.stage-card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.stage-header{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;cursor:pointer;user-select:none}
+.stage-num{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.stage-info{flex:1;min-width:0}
+.stage-info .stage-title{font-size:15px;font-weight:600;color:var(--text)}
+.stage-info .stage-meta{font-size:12px;color:var(--text2);margin-top:2px;display:flex;gap:12px;flex-wrap:wrap}
+.stage-info .stage-meta span{display:inline-flex;align-items:center;gap:4px}
+.stage-progress{flex-shrink:0;width:80px;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.stage-progress .pct{font-size:13px;font-weight:600;color:var(--accent)}
+.stage-progress .bar{width:100%;height:4px;background:var(--progress-bg);border-radius:2px;overflow:hidden}
+.stage-progress .bar .fill{height:100%;background:#7a8599;border-radius:2px;transition:width .4s}
+.stage-chevron{flex-shrink:0;color:var(--text2);transition:transform .25s;font-size:18px}
+.stage-card.open .stage-chevron{transform:rotate(180deg)}
+.stage-body{display:none;border-top:1px solid var(--border);padding:20px 24px}
+.stage-card.open .stage-body{display:block}
+.stage-body h4{font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:8px;margin-top:16px}
+.stage-body h4:first-child{margin-top:0}
+.stage-body p,.stage-body li{font-size:13px;line-height:1.6;color:var(--text2)}
+.stage-body ul{padding-left:18px;list-style:disc}
+.stage-body .resp{display:inline-flex;align-items:center;gap:6px;background:var(--orange-light);color:var(--orange);padding:4px 12px;border-radius:6px;font-size:12px;font-weight:500;margin-top:8px}
+.stage-body .result{background:var(--teal-light);color:var(--navy);padding:10px 14px;border-radius:8px;font-size:13px;margin-top:10px;border-left:3px solid var(--teal);font-weight:500}
+/* STAGE ACTIONS */
+.stage-action{border:1px solid var(--border);border-radius:8px;margin-bottom:6px;overflow:hidden;transition:border-color .15s}
+.stage-action:hover{border-color:var(--accent)}
+.stage-action.done{background:rgba(87,217,184,.04);border-color:var(--teal)}
+.stage-action-header{display:flex;align-items:flex-start;gap:8px;padding:8px 10px}
+.stage-action-check{flex-shrink:0;width:18px;height:18px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;margin-top:2px}
+.stage-action-check svg{display:none;width:10px;height:10px}
+.stage-action.done .stage-action-check{background:var(--teal);border-color:var(--teal)}
+.stage-action.done .stage-action-check svg{display:block}
+.stage-action-num{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:2px}
+.stage-action-field{flex:1;min-height:32px;border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:12px;font-family:inherit;line-height:1.5;color:var(--text);background:var(--card);resize:vertical;transition:border-color .2s}
+.stage-action-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-light)}
+.stage-action.done .stage-action-field{background:rgba(87,217,184,.06);border-color:rgba(87,217,184,.3);color:var(--text2)}
+.stage-action.done .stage-action-field::placeholder{color:var(--text2)}
+
+/* BRIEF */
+.brief-intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brief-intro p{font-size:13px;color:var(--text2);line-height:1.5;max-width:600px}
+.brief-block{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.brief-header{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;user-select:none;transition:background .15s}
+.brief-header:hover{background:var(--accent-light)}
+.brief-num{flex-shrink:0;width:26px;height:26px;border-radius:6px;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.brief-header h3{font-size:14px;font-weight:600;color:var(--text);flex:1}
+.brief-chevron{color:var(--text2);transition:transform .25s;font-size:16px}
+.brief-block.open .brief-chevron{transform:rotate(180deg)}
+.brief-body{display:none;border-top:1px solid var(--border);padding:16px 20px}
+.brief-block.open .brief-body{display:block}
+.brief-body .q{font-size:13px;line-height:1.6;color:var(--text);padding:5px 0;padding-left:16px;position:relative}
+.brief-body .q::before{content:'•';position:absolute;left:4px;color:var(--accent);font-weight:700}
+.brief-body .q-note{font-size:12px;color:var(--text2);font-style:italic;padding:3px 0 3px 16px}
+.brief-body .q-opt{font-size:12px;color:var(--orange);padding:2px 0 2px 16px}
+.brief-copy-btn{padding:6px 14px;border:none;border-radius:6px;background:var(--card);border:1px solid var(--border);font-size:12px;color:var(--text2);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;margin-top:10px}
+.brief-copy-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.brief-copy-btn.copied{background:var(--teal);color:var(--navy-dark);border-color:var(--teal)}
+.brief-field{width:100%;min-height:40px;border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;font-family:inherit;line-height:1.5;color:var(--text);resize:vertical;transition:border-color .2s;box-sizing:border-box;display:block}
+.brief-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+
+/* INSTRUCTION - compact */
+.instruction-nav{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.instruction-nav .inav-btn{padding:5px 10px;border:1px solid var(--border);border-radius:5px;background:var(--card);font-size:10px;color:var(--text2);cursor:pointer;transition:all .2s;line-height:1.3}
+.instruction-nav .inav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.instruction-nav .inav-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Principles - collapsible card */
+.inst-principles-card{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:14px;overflow:hidden}
+.inst-principles-header{display:flex;align-items:center;gap:8px;padding:10px 14px;cursor:pointer;user-select:none;font-size:13px;color:var(--navy-dark)}
+.inst-principles-header .chevron{transition:transform .2s;font-size:14px;color:var(--text2);margin-left:auto}
+.inst-principles-card.open .inst-principles-header .chevron{transform:rotate(180deg)}
+.inst-principles-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border);padding-top:10px}
+.inst-principles-card.open .inst-principles-body{display:block}
+.principle-item{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.principle-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.principle-item strong{font-size:12px;color:var(--navy-dark)}
+.principle-item p{font-size:12px;color:var(--text2);line-height:1.5;margin-top:2px}
+
+/* Parts */
+.inst-part{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.inst-part-header{padding:10px 14px;background:var(--accent-light);border-bottom:1px solid var(--border)}
+.inst-part-header h3{font-size:14px;font-weight:600;color:var(--navy-dark)}
+
+/* Steps - accordion */
+.inst-part-body{padding:0}
+.inst-step{border-bottom:1px solid var(--border)}
+.inst-step:last-child{border-bottom:none}
+.inst-step-header{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;user-select:none;transition:background .15s}
+.inst-step-header:hover{background:var(--accent-light)}
+.inst-step-header .step-num{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.inst-step-header .step-info{flex:1;font-size:12px;color:var(--text)}
+.inst-step-header .step-info .step-time{color:var(--text2);font-weight:400}
+.inst-step-header .chevron{font-size:12px;color:var(--text2);transition:transform .2s}
+.inst-step.open .inst-step-header .chevron{transform:rotate(90deg)}
+.inst-step-body{display:none;padding:0 14px 10px;border-top:1px solid var(--border);padding-top:8px}
+.inst-step.open .inst-step-body{display:block}
+.inst-step-body .step-goal{font-size:12px;color:var(--orange);font-weight:500;margin-bottom:6px}
+.inst-step-body .step-do{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px}
+.inst-step-body .step-script{display:none;background:var(--yellow-light);padding:8px 12px;border-radius:6px;font-size:12px;color:var(--navy);line-height:1.5;margin:6px 0;border-left:3px solid var(--yellow)}
+.inst-step-body .step-script.show{display:block}
+.inst-step-body .script-toggle{font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:var(--text2);cursor:pointer;margin:4px 0}
+.inst-step-body .script-toggle:hover{border-color:var(--yellow);color:var(--navy);background:var(--yellow-light)}
+.inst-step-body .step-fix{background:var(--teal-light);padding:6px 10px;border-radius:5px;font-size:11px;color:var(--navy);margin-top:6px;border-left:3px solid var(--teal);line-height:1.4}
+.inst-step-body .step-note{background:var(--pink);padding:6px 10px;border-radius:5px;font-size:11px;color:var(--navy);margin-top:6px;border-left:3px solid var(--red);line-height:1.4}
+
+/* PROMPTS */
+.prompts-intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.prompts-intro h2{font-size:16px;color:var(--navy-dark);margin-bottom:4px}
+.prompts-intro p{font-size:13px;color:var(--text2);line-height:1.5}
+
+.prompts-section{margin-bottom:28px}
+.prompts-section-title{font-size:15px;font-weight:600;color:var(--navy-dark);margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--accent-light)}
+
+.prompt-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.prompt-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;user-select:none;transition:background .15s}
+.prompt-header:hover{background:var(--accent-light)}
+.prompt-num{flex-shrink:0;width:22px;height:22px;border-radius:6px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.prompt-title{flex:1;font-size:13px;font-weight:600;color:var(--text)}
+.prompt-step{font-size:10px;color:var(--text2);font-weight:400;background:var(--accent-light);padding:1px 6px;border-radius:4px;margin-right:6px}
+.prompt-chevron{font-size:12px;color:var(--text2);transition:transform .2s}
+.prompt-card.open .prompt-chevron{transform:rotate(90deg)}
+.prompt-body{display:none;padding:0 14px 12px;border-top:1px solid var(--border);padding-top:10px}
+.prompt-card.open .prompt-body{display:block}
+.prompt-text{font-size:13px;color:var(--text);line-height:1.6;white-space:pre-wrap;background:var(--bg);padding:12px 14px;border-radius:8px;border-left:3px solid var(--accent);margin-bottom:8px}
+.prompt-copy-btn{font-size:11px;padding:4px 10px;border:1px solid var(--border);border-radius:5px;background:var(--card);color:var(--text2);cursor:pointer}
+.prompt-copy-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.prompt-copy-btn.copied{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+
+/* Analytical note structure */
+.note-structure{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.note-structure-header{padding:14px 18px;background:var(--accent-light);border-bottom:1px solid var(--border)}
+.note-structure-header h3{font-size:15px;font-weight:600;color:var(--navy-dark)}
+.note-structure-body{padding:16px 18px}
+.note-section{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.note-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.note-section-title{font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.note-section-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.note-comp-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.note-comp-tag{padding:3px 10px;border-radius:5px;font-size:11px;font-weight:500}
+.note-comp-tag.result{background:rgba(255,94,46,.1);color:#e04a1a;border:1px solid rgba(255,94,46,.2)}
+.note-comp-tag.team{background:rgba(102,0,255,.1);color:var(--accent);border:1px solid rgba(102,0,255,.2)}
+.note-comp-tag.tech{background:rgba(87,217,184,.15);color:#1a8a72;border:1px solid rgba(87,217,184,.25)}
+
+/* ANALYTICAL NOTE FORM */
+.note-form-intro{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.note-form-intro p{font-size:13px;color:var(--text2);line-height:1.5;max-width:600px}
+.note-form-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.note-form-header{padding:12px 18px;background:var(--accent-light);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.note-form-header h3{font-size:14px;font-weight:600;color:var(--navy-dark);flex:1}
+.note-form-chevron{color:var(--text2);transition:transform .25s;font-size:14px}
+.note-form-card.open .note-form-chevron{transform:rotate(180deg)}
+.note-form-body{display:none;padding:14px 18px;border-top:1px solid var(--border)}
+.note-form-card.open .note-form-body{display:block}
+.note-form-body textarea{width:100%;min-height:80px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;font-family:inherit;line-height:1.5;color:var(--text);resize:vertical;transition:border-color .2s;box-sizing:border-box}
+.note-form-body textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.note-form-body .note-form-comp-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;margin-bottom:4px}
+.note-form-body .note-form-comp-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:500;text-decoration:none;transition:all .2s}
+.note-form-body .note-form-comp-tag.result{background:rgba(255,94,46,.1);color:#e04a1a;border:1px solid rgba(255,94,46,.2)}
+.note-form-body .note-form-comp-tag.result:hover{background:rgba(255,94,46,.2);border-color:#e04a1a}
+.note-form-body .note-form-comp-tag.team{background:rgba(102,0,255,.1);color:var(--accent);border:1px solid rgba(102,0,255,.2)}
+.note-form-body .note-form-comp-tag.team:hover{background:rgba(102,0,255,.2)}
+.note-form-body .note-form-comp-tag.tech{background:rgba(87,217,184,.15);color:#1a8a72;border:1px solid rgba(87,217,184,.25)}
+.note-form-body .note-form-comp-tag.tech:hover{background:rgba(87,217,184,.25)}
+.note-form-body .note-form-comp-tag{cursor:default}
+.note-form-body .note-form-tag-link{font-size:10px;opacity:.6;margin-left:2px}
+
+/* SKILLS OVERVIEW */
+.skills-overview{margin-bottom:24px}
+.skills-level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.skills-level-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.skills-level-header{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.skills-level-header.l1{background:rgba(88,135,255,0.08)}
+.skills-level-header.l2{background:rgba(119,0,255,0.08)}
+.skills-level-header.l3{background:rgba(255,94,46,0.08)}
+.skills-level-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.skills-level-badge.l1{background:rgba(88,135,255,0.15);color:#5887ff}
+.skills-level-badge.l2{background:rgba(119,0,255,0.15);color:var(--accent)}
+.skills-level-badge.l3{background:rgba(255,94,46,0.15);color:#ff5e2e}
+.skills-level-title{font-size:12px;font-weight:600;color:var(--navy-dark)}
+.skills-level-sub{font-size:10px;color:var(--text2);margin-left:auto}
+.skills-level-body{padding:8px 10px 10px}
+.skills-block{margin-bottom:8px}
+.skills-block:last-child{margin-bottom:0}
+.skills-block-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;padding:1px 6px;border-radius:3px;display:inline-block}
+.skills-block-name.result{color:#e04a1a;background:rgba(255,94,46,.08)}
+.skills-block-name.team{color:var(--accent);background:rgba(102,0,255,.08)}
+.skills-block-name.tech{color:#1a8a72;background:rgba(87,217,184,.12)}
+.skills-comp{margin-bottom:5px;padding:4px 0;border-bottom:1px solid var(--border)}
+.skills-comp:last-child{border-bottom:none;margin-bottom:0}
+.skills-comp-name{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px}
+.skills-comp-tags{display:flex;flex-wrap:wrap;gap:3px}
+.skills-comp-tag{padding:1px 6px;border-radius:3px;font-size:9px;color:var(--text2);background:var(--bg);border:1px solid var(--border);line-height:1.5}
+.note-form-body .note-form-desc{font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:8px}
+
+/* TRAINING PICKER */
+.training-picker{margin-top:12px;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+.training-picker-title{font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:8px}
+.training-select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;color:var(--text);background:var(--card);margin-bottom:10px;cursor:pointer}
+.training-select:focus{outline:none;border-color:var(--accent)}
+.training-results{max-height:320px;overflow-y:auto}
+.training-count{font-size:11px;color:var(--text2);margin-bottom:6px}
+.training-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:6px;margin-bottom:5px;background:var(--card);transition:border-color .15s}
+.training-item:hover{border-color:var(--accent)}
+.training-format{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.training-format.курс{background:rgba(87,217,184,.12);color:#1a8a72}
+.training-format.онлайн-программа{background:rgba(102,0,255,.1);color:var(--accent)}
+.training-format.трек{background:rgba(255,191,7,.15);color:#8a6b00}
+.training-format.практикум{background:rgba(255,79,18,.1);color:var(--orange)}
+.training-format.программа{background:rgba(102,0,255,.15);color:var(--accent)}
+.training-level-group{margin:6px 0 4px;padding:4px 0 2px;border-top:1px dashed var(--border)}
+.training-level-group:first-of-type{border-top:none}
+.training-level-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.training-level-badge.l1{background:rgba(88,135,255,.12);color:#5887FF}
+.training-level-badge.l2{background:rgba(102,0,255,.12);color:var(--accent)}
+.training-level-badge.l3{background:rgba(255,94,46,.12);color:#FF5E2E}
+.training-name{font-size:12px;font-weight:500;flex:1;line-height:1.3}
+.training-link{font-size:11px;color:var(--accent);text-decoration:none;white-space:nowrap;flex-shrink:0;padding:2px 6px;border-radius:4px;transition:background .15s}
+.training-link:hover{background:var(--accent-light)}
+.training-add-btn{width:24px;height:24px;border-radius:50%;border:1px solid var(--teal);background:var(--teal-light);color:#1a8a72;font-size:16px;font-weight:700;line-height:1;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.training-add-btn:hover{background:var(--teal);color:#fff}
+.training-empty{font-size:12px;color:var(--text2);text-align:center;padding:12px}
+.training-remove-btn{width:24px;height:24px;border-radius:50%;border:1px solid var(--red);background:rgba(225,50,12,.08);color:var(--red);font-size:16px;font-weight:700;line-height:1;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.training-remove-btn:hover{background:var(--red);color:#fff}
+.training-add-btn.selected{background:var(--teal);color:#fff;border-color:var(--teal);opacity:.6;cursor:default}
+.training-route{margin-top:16px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.training-route-title{font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:10px}
+.training-route-table{width:100%;border-collapse:collapse;font-size:12px}
+.training-route-table th{padding:6px 8px;text-align:left;background:var(--bg);border-bottom:2px solid var(--border);font-weight:600;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+.training-route-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+.training-route-table tr:hover td{background:var(--accent-light)}
+.training-route-table .td-num{width:28px;text-align:center;color:var(--text2);font-weight:600}
+.training-route-table .td-format{white-space:nowrap}
+.training-route-table .td-name{font-weight:500}
+.training-route-table .td-link a{color:var(--accent);text-decoration:none}
+.training-route-table .td-link a:hover{text-decoration:underline}
+.training-route-table .td-note{font-size:11px;color:var(--text2);font-style:italic;max-width:180px}
+.training-route-empty{font-size:12px;color:var(--text2);text-align:center;padding:12px}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 32px 16px;border-top:1px solid var(--border);font-size:12px;color:var(--text2);margin-top:40px}
+.footer span{color:var(--accent);font-weight:600}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.header{padding:16px;flex-direction:column;align-items:stretch}
+
+.tabs{padding:0 16px;gap:0}
+.tab{padding:12px 14px;font-size:13px}
+.content{padding:16px}
+.stage-header{flex-wrap:wrap}
+.stage-progress{width:60px}
+.skills-level-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+<div class="header-left">
+<div class="header-logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+</div>
+<div>
+<h1>Рекомендации по индивидуальному развитию</h1>
+<div class="sub">Процесс · Бриф · Инструкция · Аналитическая записка · Промпты</div>
+</div>
+</div>
+
+</header>
+
+<!-- TABS -->
+<div id="js-errors" style="background:#ffe0e0;color:#c00;padding:8px 32px;font-size:13px;display:none"></div>
+<nav class="tabs" id="tabs">
+<button class="tab active" data-tab="process" onclick="switchTab('process')">Процесс <span class="tab-count">6</span></button>
+<button class="tab" data-tab="brief" onclick="switchTab('brief')">Бриф <span class="tab-count">10</span></button>
+<button class="tab" data-tab="instruction" onclick="switchTab('instruction')">Инструкция <span class="tab-count">9</span></button>
+<button class="tab" data-tab="analytical-note" onclick="switchTab('analytical-note')">Аналитическая записка <span class="tab-count">11</span></button>
+<button class="tab" data-tab="prompts" onclick="switchTab('prompts')">Промпты <span class="tab-count">16</span></button>
+</nav>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ===== TAB: PROCESS ===== -->
+<div class="tab-content active" id="tab-process">
+<div class="process-intro">
+<h2>Процесс «Рекомендации по индивидуальному развитию»</h2>
+<p>Обеспечить системный и персонализированный подход к разработке индивидуальных рекомендаций по развитию сотрудников: выявить потребности в навыках, подобрать релевантные образовательные решения и сформировать структурированные рекомендации.</p>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:14px">
+<div style="flex:1;min-width:200px;background:var(--progress-bg);padding:12px 16px;border-radius:8px">
+<div style="font-size:11px;font-weight:600;color:var(--navy-dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Триггер процесса</div>
+<p style="font-size:13px;color:var(--text2);line-height:1.5">Заявка на индивидуальное развитие направляется:</p>
+<ul style="font-size:13px;color:var(--text);padding-left:18px;margin-top:4px;line-height:1.6">
+<li>Непосредственному руководителю</li>
+<li>HR-бизнес-партнёру (HRBP)</li>
+<li>Руководителю проектов команды обучения и оценки</li>
+</ul>
+</div>
+<div style="flex:1;min-width:200px;background:var(--accent-light);padding:12px 16px;border-radius:8px">
+<div style="font-size:11px;font-weight:600;color:var(--navy-dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Общие сроки</div>
+<p style="font-size:24px;font-weight:700;color:var(--navy-dark)">5–12 дней</p>
+<p style="font-size:12px;color:var(--text2)">от заявки до отправки рекомендаций</p>
+</div>
+</div>
+
+<div class="process-total-bar" id="totalBar"></div>
+<div class="user-progress-label"><span id="progressLabel">0 из 0 задач</span><span id="progressPct">0%</span></div>
+</div>
+
+<div style="margin-bottom:20px">
+<div class="brief-block" style="border-color:var(--orange)">
+<div class="brief-header" onclick="this.closest('.brief-block').classList.toggle('open')" style="background:var(--orange-light)">
+<span class="brief-num" style="background:var(--orange);color:#fff">Р</span>
+<h3 style="font-size:14px">Роли участников процесса</h3>
+<span class="brief-chevron">▾</span>
+</div>
+<div class="brief-body" style="padding:16px 20px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+<div style="background:var(--accent-light);padding:12px;border-radius:8px"><strong style="font-size:13px;color:var(--accent)">Сотрудник</strong><p style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5">Инициирует запрос на развитие; участвует в брифе; предоставляет информацию о задачах, целях и зонах развития; реализует рекомендации.</p></div>
+<div style="background:var(--orange-light);padding:12px;border-radius:8px"><strong style="font-size:13px;color:var(--orange)">Непосредственный руководитель</strong><p style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5">Согласует запрос; подтверждает приоритетные навыки; согласует заявку на внешние программы; контролирует прогресс развития.</p></div>
+<div style="background:var(--teal-light);padding:12px;border-radius:8px"><strong style="font-size:13px;color:var(--teal);color:var(--navy)">Руководитель проектов обучения</strong><p style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5">Проводит бриф; анализирует запрос; подбирает образовательные решения; формирует презентацию с рекомендациями; отправляет финальные материалы.</p></div>
+<div style="background:var(--yellow-light);padding:12px;border-radius:8px"><strong style="font-size:13px;color:var(--navy-dark)">HR-бизнес-партнёр (HRBP)</strong><p style="font-size:12px;color:var(--text2);margin-top:4px;line-height:1.5">Маршрутизирует запрос; обеспечивает связь между сотрудником, руководителем и командой обучения; консультирует по политикам развития и лимитам; согласовывает заявку на внешнее обучение.</p></div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="stagesContainer"></div>
+
+<!-- Критерии успеха, ограничения -->
+<div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+<div class="brief-block" style="border-color:var(--teal)">
+<div class="brief-header" onclick="this.closest('.brief-block').classList.toggle('open')" style="background:var(--teal-light)">
+<span class="brief-num" style="background:var(--teal);color:var(--navy-dark)">OK</span>
+<h3 style="font-size:14px">Критерии успеха</h3>
+<span class="brief-chevron">▾</span>
+</div>
+<div class="brief-body">
+<h4 style="font-size:12px;color:var(--navy-dark);margin-bottom:6px">Качественные</h4>
+<ul style="font-size:12px;line-height:1.6;padding-left:16px;color:var(--text2);margin-bottom:12px">
+<li>Рекомендации персонализированы и соответствуют запросу сотрудника</li>
+<li>Подобранные решения релевантны выявленным навыкам</li>
+<li>Презентация структурирована, понятна и содержит конкретные действия</li>
+<li>Сотрудник понимает, как приступить к обучению</li>
+<li>Руководитель видит связь рекомендаций с бизнес-задачами</li>
+</ul>
+<h4 style="font-size:12px;color:var(--navy-dark);margin-bottom:6px">Количественные</h4>
+<ul style="font-size:12px;line-height:1.6;padding-left:16px;color:var(--text2)">
+<li>100% заявок обработаны в установленные сроки</li>
+<li>≥ 80% сотрудников оценивают рекомендации как полезные</li>
+<li>≥ 60% сотрудников начинают программу в течение 30 дней</li>
+<li>≥ 50% сотрудников завершают программы в течение 90 дней</li>
+</ul>
+</div>
+</div>
+<div>
+<div class="brief-block" style="border-color:var(--yellow)">
+<div class="brief-header" onclick="this.closest('.brief-block').classList.toggle('open')" style="background:var(--yellow-light)">
+<span class="brief-num" style="background:var(--yellow);color:var(--navy-dark)">⚠</span>
+<h3 style="font-size:14px">Ограничения и допущения</h3>
+<span class="brief-chevron">▾</span>
+</div>
+<div class="brief-body">
+<ul style="font-size:12px;line-height:1.6;padding-left:16px;color:var(--text2)">
+<li>Лимиты на внешнее обучение определяются грейдом сотрудника</li>
+<li>Запись брифа — только с согласия сотрудника</li>
+<li>Результаты брифа и аналитическая записка конфиденциальны</li>
+<li>Внутренний каталог решений обновляется не реже 1 раза в полгода/год</li>
+<li>Повторная заявка — не ранее чем через 6 месяцев (или при смене роли)</li>
+</ul>
+</div>
+</div>
+<div class="brief-block" style="border-color:var(--red)">
+<div class="brief-header" onclick="this.closest('.brief-block').classList.toggle('open')" style="background:var(--pink)">
+<span class="brief-num" style="background:var(--red);color:#fff">!</span>
+<h3 style="font-size:14px">Эскалация и обратная связь</h3>
+<span class="brief-chevron">▾</span>
+</div>
+<div class="brief-body">
+<h4 style="font-size:12px;color:var(--red);margin-bottom:6px">Эскалация</h4>
+<ul style="font-size:12px;line-height:1.6;padding-left:16px;color:var(--text2);margin-bottom:12px">
+<li>Если нет подходящего решения — вопрос эскалируется на HR-BP и руководителя сотрудника</li>
+<li>Если сотрудник не является на бриф дважды без уважительной причины — заявка закрывается с уведомлением руководителя</li>
+</ul>
+<h4 style="font-size:12px;color:var(--navy-dark);margin-bottom:6px">Обратная связь</h4>
+<ul style="font-size:12px;line-height:1.6;padding-left:16px;color:var(--text2)">
+<li>Через 14 дней после отправки рекомендаций — короткий опрос удовлетворённости (3–5 вопросов)</li>
+<li>Результаты опросов агрегируются ежеквартально для улучшения процесса</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ===== TAB: BRIEF ===== -->
+<div class="tab-content" id="tab-brief">
+<div class="brief-intro">
+<div>
+<h2 style="font-size:16px;color:var(--navy-dark);margin-bottom:4px">Бриф для сбора потребности</h2>
+<p>Структурированное интервью с сотрудником для глубинного понимания запроса, контекста, целей и ожиданий. Используйте блоки выборочно — следуйте за логикой диалога.</p>
+</div>
+<button class="btn btn-accent btn-sm" onclick="exportBriefDoc()">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+Скачать DOC
+</button>
+</div>
+<div id="briefContainer"></div>
+</div>
+
+<!-- ===== TAB: INSTRUCTION ===== -->
+<div class="tab-content" id="tab-instruction">
+<div class="instruction-nav" id="instNav"></div>
+<div id="instructionContainer"></div>
+</div>
+
+<!-- ===== TAB: ANALYTICAL NOTE ===== -->
+<div class="tab-content" id="tab-analytical-note">
+<div id="analyticalNoteContainer"></div>
+</div>
+
+<!-- ===== TAB: PROMPTS ===== -->
+<div class="tab-content" id="tab-prompts">
+<div id="promptsContainer"></div>
+</div>
+
+</div>
+
+<footer class="footer">Индивидуальное развитие · <span>Ростелеком</span></footer>
+
+<script>
+// ============ DATA ============
+
+const STAGES = [
+{
+id:1, title:'Приём и маршрутизация заявки', duration:'1-2 дня', resp:'Руководитель проектов обучения',
+desc:'Сотрудник направляет запрос на индивидуальное развитие. Заявка регистрируется и передаётся руководителю проектов команды обучения и оценки.',
+actions:[
+'Сотрудник формирует заявку (письмо) с описанием запроса',
+'Получатель заявки (руководитель / HR-BP) перенаправляет её руководителю проектов обучения (если заявка поступила не напрямую)',
+'Руководитель проектов обучения регистрирует заявку и подтверждает её получение',
+'Назначается дата проведения брифа'
+],
+result:'Зарегистрированная заявка, назначенная дата брифа, отправлено приглашение сотруднику'},
+{
+id:2, title:'Проведение брифа для сбора потребности', duration:'1-3 дня', resp:'Руководитель проектов обучения',
+desc:'Структурированное интервью с сотрудником для глубинного понимания запроса, контекста, целей и ожиданий.',
+actions:[
+'Подготовка к брифу: изучение доступной информации о сотруднике (должность, грейд, результаты оценок)',
+'Проведение брифа по утверждённой инструкции (30–60 минут)',
+'Запись интервью (видео/аудио — с согласия сотрудника)',
+'Заполнение брифа согласно утвержденной инструкции'
+],
+result:'Запись брифа, заполненная карта потребностей сотрудника'},
+{
+id:3, title:'Анализ запроса: формирование профиля компетенций и аналитической записки', duration:'1-3 дня', resp:'Руководитель проектов обучения',
+desc:'На основе данных брифа и оценок формируется профиль компетенций по 12 навыкам модели Ростелекома, gap-анализ, приоритеты развития и аналитическая записка из 11 разделов.',
+actions:[
+'Анализ брифа — распределение данных по 11 разделам аналитической записки',
+'Gap-анализ по 12 компетенциям: текущий уровень (L1/L2/L3) → целевой → разрыв (раздел 4)',
+'Формирование матрицы компетенций с цветовой кодировкой по блокам (Результат / Команда / Технологии)',
+'Анализ по блокам: сильные стороны, зоны роста, рекомендации для каждой компетенции (разделы 5-7)',
+'Определение топ-3 приоритетных направлений развития с обоснованием (раздел 8)',
+'Подготовка разделов 1-3, 10-11: введение, общая информация, запрос и гипотезы, риски, заключение'
+],
+tools:'Модель компетенций Ростелекома · Оценка 360° / Performance Review · Матрица навыков по грейдам и ролям · Бриф сотрудника',
+result:'Аналитическая записка из 11 разделов: профиль компетенций, gap-анализ, приоритеты развития, риски'},
+{
+id:4, title:'Подбор образовательных решений и формирование плана действий', duration:'1-3 дня', resp:'Руководитель проектов обучения',
+desc:'Для каждого выявленного дефицита подбираются образовательные решения из каталога TRAININGS_DATA, группируются по блокам компетенций и сортируются по формату.',
+actions:[
+'Подбор решений из TRAININGS_DATA под каждый выявленный дефицит (с учётом уровня L1/L2/L3)',
+'Группировка решений по блокам: Результат → Команда → Технологии',
+'Сортировка внутри блока по формату: курс → практикум → трек → программа',
+'Формирование раздела 9 «План первоочередных действий» с маршрутной таблицей обучения',
+'Проверка доступности решений: актуальность, ссылки, соответствие уровню',
+'Валидация подобранных решений совместно с сотрудником'
+],
+priorities:'Приоритет 1: Внутренние ресурсы Ростелекома\n  • Онлайн-курсы — системное изучение знаний\n  • Онлайн-практикумы — отработка конкретных навыков\n  • Онлайн-треки — глубокое погружение в тему\n  • Тулкиты — быстрые инструменты для внедрения\nПриоритет 2: Внутренняя экспертиза\n  • Консультации коучей\n  • Менторинг (развитие экспертизы, адаптация к новой роли)\n  • Карьерные консультации\nПриоритет 3: Внешние программы (согласование с руководителем/HRBP в рамках лимита грейда)',
+result:'Раздел 9 аналитической записки с маршрутной таблицей обучения (блоки → форматы)'},
+{
+id:5, title:'Оформление DOC-презентации с рекомендациями', duration:'0,5 дня', resp:'Руководитель проектов обучения',
+desc:'Формирование DOC-презентации из разделов аналитической записки (1, 2, 8, 9, 11) с таблицей обучений.',
+actions:[
+'Сбор данных из аналитической записки: разделы 1, 2, 8, 9, 11',
+'Формирование структуры DOC-презентации: титул → введение → общая информация → приоритеты → план действий → заключение',
+'Генерация слайдов с таблицей обучений (сгруппировано по блокам и форматам)',
+'Проверка качества: полнота данных, корректность ссылок, оформление',
+'Финальная вычитка и экспорт DOC'
+],
+result:'Готовая DOC-презентация: 6 слайдов с рекомендациями'},
+{
+id:6, title:'Формирование и отправка письма с рекомендациями', duration:'0,5 дня', resp:'Руководитель проектов обучения',
+desc:'Подготовка сопроводительного письма и отправка презентации сотруднику (с копией руководителю и/или HR-BP по согласованию).',
+actions:[
+'Подготовка сопроводительного письма',
+'Согласование списка получателей',
+'Отправка письма с вложенной презентацией'
+],
+result:'Отправленное письмо с презентацией'}
+];
+
+const BRIEF_BLOCKS = [
+{num:1, title:'Общая информация', notes:'Блок обязателен к заполнению', questions:[
+'Подразделение сотрудника',
+'Должность / роль',
+'Текущий грейд / уровень менеджмента',
+'Целевой уровень через 1–2 года (если есть план продвижения)',
+'Стаж в компании',
+'Стаж в текущей роли',
+'ФИО сотрудника',
+'ФИО руководителя',
+'HR BP подразделения',
+'Контактное лицо от команды обучения',
+'Дата интервью',
+'Первичная формулировка задачи от руководителя/сотрудника',
+'Доступные данные по сотруднику (360°, диагностика, ИПР, performance review, Онлайн-университет, опрос вовлечённости)'
+]},
+{num:2, title:'Причины запроса на развитие', notes:'Блок обязателен к заполнению', questions:[
+'Расскажите о текущей ситуации в работе. Что сейчас происходит?',
+'Какие изменения в работе произошли (продвижение, смена задач, новые KPI)?',
+'Какие сложности испытываете в текущей роли?',
+'Что стало триггером для запроса на развитие?',
+'Приведите конкретный пример ситуации, где не хватило навыков/знаний.'
+]},
+{num:3, title:'Образ результата', notes:'Блок обязателен к заполнению', questions:[
+'Как вы представляете идеальный результат развития через 3/6/12 месяцев?',
+'По каким признакам поймёте, что развитие прошло успешно?',
+'Что конкретно будете делать иначе после обучения?',
+'Пример ситуации «до» и «после» в работе',
+'Какой минимальный результат считать успешным? Какой — идеальным?'
+]},
+{num:4, title:'Дефицит навыков', notes:'Блок обязателен к заполнению', questions:[
+'Каких знаний, навыков или установок не хватает?',
+'Что мешает выполнять задачи эффективнее?',
+'Какие процессы/инструменты не работают из-за дефицита?',
+'Было ли обучение по этой теме ранее? Почему результат был недостаточным?',
+'Это проблема характерна для роли в целом или только у вас?'
+]},
+{num:5, title:'Связь навыков с бизнесом', notes:'Блок обязателен к заполнению', questions:[
+'Какие ключевые задачи и KPI/MBO стоят перед вами сейчас?',
+'Как дефицит навыков влияет на показатели подразделения / сегмента?',
+'Какие риски для бизнеса возникают, если развитие не произойдёт?',
+'Примеры бизнес-показателей, которые улучшатся после развития',
+'Что произойдёт через 6 месяцев, если ничего не менять?'
+]},
+{num:6, title:'Способы измерения результатов', notes:'Блок обязателен к заполнению', questions:[
+'Какие метрики могут измениться в результате развития?',
+'Когда ожидаются первые изменения?',
+'Как измерить прогресс: в процессе обучения? по завершении? через 2–3 месяца?',
+'Кто будет отслеживать изменения (руководитель, HR, сам сотрудник)?',
+'Какие инструменты оценки уже есть (360°, тесты, наблюдение, KPI)?'
+]},
+{num:7, title:'Роль руководителя', notes:'Блок обязателен к заполнению', questions:[
+'Что руководитель уже пробовал делать для вашего развития?',
+'Что сработало, а что — нет?',
+'Какую роль руководитель видит во время и после проекта развития?',
+'Готов ли руководитель уделять время на коучинг/обсуждения/обратную связь?'
+]},
+{num:8, title:'Поддержка результатов обучения', notes:'Блок обязателен к заполнению', questions:[
+'Какие ещё меры поддержки планируются параллельно (менторство, ротация, проекты)?',
+'Как планируете закреплять новые навыки на практике?',
+'Какие условия для применения навыков уже есть / нужно создать?',
+'Есть ли возможности для применения новых навыков в текущих задачах?'
+]},
+{num:9, title:'Предпочтения по формату обучения', notes:'Блок обязателен к заполнению', questions:[
+'Вспомните обучение, которое было по-настоящему полезным. Почему сработало?',
+'А было ли обучение, которое показалось пустой тратой времени? Что не сработало?',
+'Желаемый формат: очно / онлайн / смешанный?',
+'Предпочтительные методы: курсы, коучинг, менторство, наставничество, проект, самообучение?',
+'Сколько времени реалистично можете выделять на развитие в неделю?',
+'Оптимальная продолжительность и интенсивность?',
+'Есть ли предпочтения по провайдерам/платформам?'
+]},
+{num:10, title:'Организационные вопросы', questions:[
+'Предполагаемые даты начала и завершения развития',
+'Бюджет на развитие (если применимо)',
+'Дата ретроспективы по плану развития',
+'Периодичность и форма обратной связи от сотрудника и руководителя',
+'Что ещё нужно узнать, чего мы не обсудили?'
+]}
+];
+
+const INSTRUCTION_PARTS = [
+{
+title:'Часть 1. Подготовка к беседе',
+steps:[
+{id:'p1s1', title:'Получите первичную формулировку задачи', do:'Получите от инициатора запроса (руководитель, HR BP или сам сотрудник) первичную формулировку задачи. Зафиксируйте её дословно — не интерпретируйте и не корректируйте на этом этапе.'},
+{id:'p1s2', title:'Заполните блок «Общая информация»', do:'Заполните блок «Общая информация» брифа до встречи, используя данные из HR-систем: подразделение, должность, грейд/уровень менеджмента, стаж в компании и в текущей роли, ФИО руководителя, HR BP, целевой уровень.'},
+{id:'p1s3', title:'Соберите и изучите доступные данные', do:'Соберите все доступные данные по сотруднику: результаты оценки 360°, диагностики компетенций, текущий ИПР, performance review, данные из Онлайн-университета, опрос вовлечённости.'},
+{id:'p1s4', title:'Сформулируйте 3–5 гипотез', do:'На основе собранных данных сформулируйте для себя 3–5 гипотез о возможных зонах развития. Это не выводы — это ваш внутренний навигатор для беседы.'},
+{id:'p1s5', title:'Подготовьте среду для беседы', do:'Забронируйте переговорную или настройте видеозвонок (с камерой). Запланируйте 60–90 минут. Отправьте сотруднику приглашение с кратким описанием цели встречи.', script:'[Имя], приглашаю вас на встречу, посвящённую обсуждению вашего профессионального развития. Мы поговорим о ваших текущих задачах, вызовах в работе и о том, какая поддержка в обучении была бы для вас наиболее полезной. Специальной подготовки не требуется. Встреча займёт около часа.'}
+]},
+{
+title:'Часть 2. Проведение беседы',
+principles:[
+{title:'Следуйте за логикой диалога', desc:'Бриф — это карта территорий, которые нужно покрыть, а не жёсткий сценарий. Если сотрудник сам переходит к другому блоку — идите за ним.'},
+{title:'Используйте вопросы из брифа выборочно', desc:'В каждом блоке предложено несколько вопросов. Выбирайте те, которые релевантны типу ситуации и помогают проверить ваши гипотезы.'},
+{title:'Добивайтесь конкретики', desc:'Ваша задача — «заземлить» каждый тезис до конкретного примера, ситуации, метрики или поведения. «Можете привести пример?», «Что именно вы сделали?»'},
+{title:'Разделяйте факты, интерпретации и желания', desc:'Фиксируйте явно: что является фактом, что — интерпретацией сотрудника, а что — пожеланием.'},
+{title:'Не предлагайте решения во время беседы', desc:'Ваша роль — собрать и структурировать информацию. Фразы вроде «вам подойдёт коучинг» на этом этапе преждевременны.'},
+{title:'Записывайте формулировки сотрудника', desc:'Используйте его слова, а не свои перефразировки. Это важно для точности брифа и узнаваемости в итоговом документе.'}
+],
+steps:[
+{id:'p2s1', title:'Открытие', time:'5-7 мин', goal:'Установить контакт, задать рамку разговора, снять тревогу.',
+do:'Поблагодарите за время. Представьтесь и объясните свою роль. Опишите цель встречи простым языком. Обозначьте формат и тайминг.',
+script:'Цель нашего разговора — разобраться, какое развитие будет для вас действительно полезным. Не формальное «пройти курс», а такое, которое поможет в реальных рабочих задачах. Это не оценка и не экзамен — мне важна ваша честная картина.'},
+{id:'p2s2', title:'Причины запроса на развитие', time:'10-15 мин', goal:'Понять контекст запроса; выявить реальную потребность.',
+do:'Начните с широкого открытого вопроса. Слушайте активно. Если сотрудник говорит об изменениях — уточните. Если о сложностях — попросите конкретный пример. Если причина неочевидна — спросите о триггере.',
+script:'Расскажите о вашей текущей ситуации в работе. Что сейчас происходит? Что стало триггером — почему именно сейчас возник вопрос о развитии?',
+fix:'Дословные формулировки сотрудника о проблеме/ситуации. Конкретные примеры (ситуация, действие, результат). Расхождение с первичной формулировкой задачи от руководителя.'},
+{id:'p2s3', title:'Образ результата', time:'10-15 мин', goal:'Перевести запрос в целевое поле; понять, как сотрудник видит успех.',
+do:'Сделайте «мостик» от предыдущего блока. Если формулирует чётко — уточните признаки успеха. Если затрудняется — вернитесь к примеру ситуации. Разделите минимальный и идеальный результат.',
+script:'Представьте, что прошло полгода и развитие прошло успешно. Что изменилось? По каким признакам поймёте? Что будет минимальным результатом? А какой — идеальный?',
+fix:'Минимальный и идеальный результат формулировками сотрудника. Конкретные поведенческие индикаторы.'},
+{id:'p2s4', title:'Дефицит навыков', time:'10-15 мин', goal:'Определить конкретные знания, навыки или установки, которых не хватает.',
+do:'Свяжите с предыдущим блоком. Спросите о конкретных навыках. Сверьтесь с данными оценок. Узнайте о предыдущем опыте обучения.',
+script:'Чего именно не хватает, чтобы работать так уже сейчас? Было ли обучение по этой теме раньше? Что помогло, а что — нет? Почему?',
+fix:'Перечень навыков/знаний с описанием дефицита. Предыдущий опыт обучения и причины неуспеха. Осознаваемые vs выявленные по данным зоны роста.'},
+{id:'p2s5', title:'Связь навыков с бизнесом', time:'5-10 мин', goal:'Привязать развитие к бизнес-результатам.',
+do:'Спросите о текущих KPI. Помогите сотруднику связать дефицит навыков с бизнес-показателями. Обсудите риски бездействия.',
+script:'Как дефицит навыков влияет на выполнение KPI? Что произойдёт через 6 месяцев, если ничего не менять?',
+fix:'Связка: дефицит навыка → влияние на метрику. Риски бездействия. Бизнес-показатели, которые улучшатся.'},
+{id:'p2s6', title:'Способы измерения результатов', time:'5-10 мин', goal:'Договориться о том, как и когда оценивать успех.',
+do:'Спросите о метриках прогресса. Как понять, что обучение идёт продуктивно? Как проверить, что навыки закрепились?',
+script:'Как мы будем измерять прогресс? Кто будет отслеживать изменения — вы, руководитель, HR?',
+fix:'Метрики с привязкой ко времени. Ответственные за мониторинг. Инструменты оценки.'},
+{id:'p2s7', title:'Роль руководителя', time:'5-7 мин', goal:'Оценить степень поддержки руководителя.', note:'Без поддержки руководителя эффективность обучения падает на 60-80%',
+do:'Спросите о том, что руководитель уже делал для развития. Оцените готовность руководителя участвовать.',
+script:'Что руководитель уже делал для вашего развития? Что сработало? Какую роль он готов играть дальше?',
+fix:'Что руководитель уже делал. Готовность к участию. Необходимость отдельной встречи с руководителем.'},
+{id:'p2s8', title:'Предпочтения по формату обучения', time:'5-10 мин', goal:'Определить оптимальный формат и условия обучения.',
+do:'Спросите о лучшем и худшем опыте обучения. Уточните реалистичное время на развитие. Проверьте соответствие формата типу навыка.',
+script:'Вспомните обучение, которое было по-настоящему полезным. Почему сработало? Сколько времени реалистично можете выделять на развитие?',
+fix:'Предпочтительный формат. Реалистичное время в неделю. Отвергаемые форматы и причины.'},
+{id:'p2s9', title:'Организационные вопросы и закрытие', time:'5-10 мин', goal:'Согласовать организационные рамки, зафиксировать открытые вопросы, завершить беседу.',
+do:'Уточните сроки, бюджет, формат обратной связи. Подведите итог — резюмируйте ключевые пункты. Опишите следующие шаги. Поблагодарите.',
+script:'Давайте я коротко подведу итог, чтобы убедиться, что мы одинаково понимаем ситуацию. Я оформлю бриф на основе нашего разговора и направлю вам на проверку.',
+fix:'Даты, бюджет, дата ретроспективы. Открытые вопросы. Необходимость доп. встреч. Ограничения и риски.'}
+]}
+];
+
+// ============ PROMPTS DATA ============
+
+const STAGE_PROMPTS = {
+p1s1:{title:'Промпт для уточнения запроса на развитие',
+text:'# РОЛЬ\nТы — старший методист по развитию персонала (Instructional Designer) в компании Ростелеком с 8-летним опытом в корпоративном обучении. Твоя экспертиза: переводить размытые бизнес-запросы в конкретные формулировки потребностей в развитии, выявлять скрытые ожидания стейкхолдеров и фиксировать первичную задачу без искажений.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет первичную формулировку запроса на развитие от инициатора (руководителя, HR BP или самого сотрудника).\n- Дождись текста запроса от пользователя.\n- Если запрос не предоставлен — мягко запроси его одним сообщением.\n- После получения — проанализируй и задай уточняющие вопросы по инструкции ниже.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Проанализируй первичную формулировку запроса.\n2. Задай уточняющие вопросы (не более 5):\n   - Что именно стало триггером запроса? (конкретная ситуация, событие, результат оценки)\n   - Какие наблюдаемые проявления проблемы или потребности?\n   - Какой ожидаемый результат и что должно измениться?\n   - Кто является инициатором — руководитель, HR или сам сотрудник?\n   - Есть ли срочность или дедлайн?\n3. Зафиксируй формулировку дословно — без интерпретации и корректировок.\n4. Если формулировка размыта — отметь это и предложи вариант уточнения.\n\n# ГРАНИЦЫ\n- Не интерпретируй запрос своими словами — только дословная фиксация\n- Не добавляй от себя цели и задачи — только то, что сказал инициатор\n- Если запрос противоречив — задай 1 дополнительный вопрос на прояснение, не больше\n\n# ШАБЛОН ВЫХОДА\n## Первичная формулировка запроса\n[Дословная цитата инициатора]\n\n## Контекст\n- Инициатор: [кто]\n- Триггер: [ситуация/событие]\n- Срочность: [есть/нет, дедлайн если указан]\n\n## Уточняющие вопросы (если нужны)\n1. [вопрос] — [почему это важно]\n2. ...\n\n## Зафиксированная формулировка для брифа\n[Итоговая формулировка после уточнений, дословно]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни с подтверждения полученного запроса\n- Задавай вопросы по одному, дождись ответа\n- Заверши коротким резюме и спроси: «Фиксируем эту формулировку для брифа?»'},
+p1s2:{title:'Промпт для сбора данных из HR-систем',
+text:'# РОЛЬ\nТы — аналитик данных и методист по развитию персонала в Ростелекоме. Твоя специализация: извлекать и структурировать HR-данные для формирования полной картины о сотруднике перед брифом.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет ФИО сотрудника и доступ к HR-системе (или скриншоты / выгрузку данных).\n- Дождись вводных от пользователя.\n- Если данных нет — запроси их одним сообщением.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Извлеки и структурируй следующие данные:\n   - Подразделение, должность, грейд / уровень менеджмента\n   - Стаж в компании и в текущей роли\n   - ФИО руководителя, HR BP\n   - Целевой уровень развития по модели Ростелекома (L1, L2, L3)\n   - Предыдущие записи о развитии (ИПР, performance review)\n2. Представь данные в виде структурированного блока для брифа.\n3. Отметь, каких данных не хватает — это поможет запросить их до встречи.\n\n# ГРАНИЦЫ\n- Используй только предоставленные данные — не додумывай\n- Не смешивай данные из разных источников без пометки\n- Если данные противоречивы — укажи расхождение\n\n# ШАБЛОН ВЫХОДА\n## Общая информация о сотруднике\n- ФИО: [значение]\n- Подразделение: [значение]\n- Должность: [значение]\n- Грейд / уровень: [значение]\n- Стаж в компании: [значение]\n- Стаж в роли: [значение]\n- Руководитель: [значение]\n- HR BP: [значение]\n- Целевой уровень развития: [L1/L2/L3]\n\n## Предыдущие записи о развитии\n[Извлечённые данные: ИПР, performance review]\n\n## Пробелы в данных\n[Что не удалось получить — запросить до встречи]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Если данные неполные — предложи конкретный запрос в HR-систему\n- Заверши вопросом: «Данные собраны. Добавить что-то ещё?»'},
+p1s3:{title:'Промпт для анализа данных сотрудника',
+text:'# РОЛЬ\nТы — аналитик данных и методист по развитию персонала в Ростелекоме. Твоя задача: на основе множества источников данных о сотруднике выявить ключевые паттерны, сильные стороны и зоны роста, а также отделить факты от гипотез.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет один или несколько источников данных:\n- Результаты оценки 360°\n- Диагностики компетенций по модели Ростелекома\n- Текущий ИПР и статус его выполнения\n- Performance review за 2-3 периода\n- Данные из Онлайн-университета (пройденные курсы, треки)\n- Опрос вовлечённости\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Проанализируй каждый источник и выдели ключевые выводы.\n2. Соотнеси данные с моделью навыков Ростелекома (12 компетенций, 3 блока: Результат, Команда, Технологии).\n3. Сформулируй:\n   - Что подтверждается данными из нескольких источников (факты)\n   - Что является единичным сигналом и требует проверки (гипотезы)\n   - По каким компетенциям есть устойчивые доказательства сильных сторон\n   - По каким компетенциям есть устойчивые сигналы о зонах роста\n4. Визуализируй профиль: сильные стороны / зоны роста / неопределённые зоны.\n\n# ГРАНИЦЫ\n- Чётко разделяй факты и интерпретации: «Данные 360° показывают...», «Можно предположить, что...»\n- Не делай выводов по единичному источнику без оговорки\n- Если источники противоречат друг другу — укажи это явно\n\n# ШАБЛОН ВЫХОДА\n## Сводка по источникам\n[Источник] → [Ключевые выводы] → [Уровень достоверности]\n\n## Профиль по модели Ростелекома\nБлок «Результат»: сильные стороны / зоны роста / неопределённо\nБлок «Команда»: сильные стороны / зоны роста / неопределённо\nБлок «Технологии»: сильные стороны / зоны роста / неопределённо\n\n## Факты (подтверждённые из 2+ источников)\n1. ...\n\n## Гипотезы (требуют проверки в беседе)\n1. ...\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Если данных недостаточно — укажи, какие минимальные данные нужны для анализа\n- Заверши вопросом: «Какие из гипотез нужно проверить в первую очередь?»'},
+p1s4:{title:'Промпт для генерации гипотез развития',
+text:'# РОЛЬ\nТы — аналитик и методист по развитию персонала в Ростелекоме. Твоя задача: на основе проанализированных данных сформулировать проверяемые гипотезы о зонах развития сотрудника. Эти гипотезы станут навигатором для беседы, а не выводами.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Профиль сотрудника по модели Ростелекома (сильные стороны / зоны роста)\n- Контекст запроса (первичная формулировка)\n- Дополнительные данные (360°, performance review) — опционально\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Сформулируй 3–5 гипотез о возможных зонах развития сотрудника.\n2. Каждая гипотеза должна содержать:\n   - Название предполагаемой зоны развития\n   - Привязку к конкретной компетенции из модели Ростелекома\n   - Обоснование: какие данные указывают на эту зону\n   - Предположение о причине, а не просто констатация дефицита\n   - Контрольный вопрос для проверки гипотезы в беседе\n\nПример: «Гипотеза: сотрудник испытывает сложности с делегированием (компетенция «Вдохновляет и развивает», L1). Обоснование: в 360° низкий балл по шкале «доверяет задачи команде», в performance review отмечена перегрузка руководителя операционными задачами. Причина:可能的 перфекционизм или страх потери контроля. Вопрос для проверки: «Расскажите о случае, когда вы поручили задачу подчинённому — что произошло и какие были результаты?»»\n\n# ГРАНИЦЫ\n- Гипотезы должны быть проверяемы в ходе беседы\n- Не формулируй гипотезы как готовые выводы: не «сотрудник не умеет делегировать», а «предполагаем, что зона роста — делегирование»\n- Минимум 3, максимум 5 гипотез\n\n# ШАБЛОН ВЫХОДА\n## Гипотезы для проверки\n### Гипотеза 1: [Название]\n- Компетенция: [название, уровень]\n- Обоснование: [какие данные указывают]\n- Предполагаемая причина: [гипотеза о причине]\n- Вопрос для проверки: [конкретный вопрос в беседу]\n\n...\n\n## Навигатор для беседы\n- Какие гипотезы проверяем в первую очередь: [приоритет]\n- Какие данные нужно собрать дополнительно: [список]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни с резюме по имеющимся данным\n- Предложи гипотезы на review пользователю: «Какие гипотезы стоит добавить или убрать?»'},
+p1s5:{title:'Промпт для подготовки к беседе',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, отвечающий за организационную подготовку встреч с сотрудниками. Твоя задача: создать комфортную и продуктивную среду для беседы, снять тревогу сотрудника, обеспечить все организационные условия.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- ФИО сотрудника\n- Контекст запроса (первичная формулировка)\n- Рекомендуемый формат встречи (очно / онлайн)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь приглашение на встречу с сотрудником.\n2. Укажи в приглашении:\n   - Цель встречи: «Обсуждение вашего профессионального развития»\n   - Формат: очно (переговорная) или видеозвонок с камерой\n   - Длительность: 60–90 минут\n   - Успокаивающее описание: «Специальной подготовки не требуется. Мы поговорим о ваших текущих задачах, вызовах в работе и о том, какая поддержка в обучении была бы для вас наиболее полезной.»\n3. Напомни организатору: забронировать переговорную / настроить ссылку на видеозвонок.\n4. Предложи чек-лист подготовки к встрече.\n\n# ГРАНИЦЫ\n- Тон — дружелюбный, но профессиональный\n- Не используй формальный канцелярит\n- Приглашение не должно выглядеть как оценка или экзамен\n\n# ШАБЛОН ВЫХОДА\n## Приглашение для сотрудника\n[Готовый текст письма / сообщения]\n\n## Чек-лист подготовки\n- [ ] Переговорная / видеозвонок настроены\n- [ ] Приглашение отправлено\n- [ ] Данные сотрудника изучены\n- [ ] Гипотезы сформулированы\n- [ ] Бриф распечатан / открыт на планшете\n- [ ] Запланировано 60-90 мин без прерываний\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Если формат не указан — уточни одним вопросом\n- Заверши: «Приглашение готово. Нужно ли что-то изменить?»'},
+p2s1:{title:'Промпт для открытия беседы',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, фасилитатор встреч развития. Твоя задача: создать безопасную и доверительную атмосферу в начале беседы, снять тревогу сотрудника и задать конструктивный тон разговору.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- ФИО сотрудника\n- Контекст запроса (первичная формулировка)\n- Формат встречи (очно / онлайн)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Напиши сценарий открытия встречи продолжительностью 5–7 минут.\n2. Включи в сценарий:\n   - Благодарность за время и готовность к диалогу\n   - Представление и объяснение своей роли: «Я помогаю сотрудникам находить то развитие, которое будет полезным в их работе»\n   - Цель встречи простым языком: «Разобраться, какое развитие будет для вас действительно полезным. Не формальное «пройти курс», а то, что поможет в реальных задачах»\n   - Снятие тревоги: «Это не оценка и не экзамен — мне важна ваша честная картина»\n   - Объяснение формата и тайминга: «Я задам несколько вопросов, а вы отвечайте максимально откровенно»\n3. Сделай тон дружелюбным, но профессиональным.\n\n# ГРАНИЦЫ\n- Не используй фразы-клише и канцелярит\n- Избегай формулировок, которые звучат как оценка или тестирование\n- Сценарий должен звучать естественно в устной речи\n\n# ШАБЛОН ВЫХОДА\n## Сценарий открытия (5-7 мин)\n**1. Благодарность (30 сек)**\n[Текст]\n\n**2. Представление и роль (1 мин)**\n[Текст]\n\n**3. Цель встречи (1 мин)**\n[Текст]\n\n**4. Снятие тревоги (1 мин)**\n[Текст]\n\n**5. Формат и тайминг (1 мин)**\n[Текст]\n\n## Ключевые фразы для запоминания\n- [Фраза 1]\n- [Фраза 2]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни с короткого резюме контекста\n- Заверши: «Сценарий готов. Нужно ли что-то скорректировать под конкретную ситуацию?»'},
+p2s2:{title:'Промпт для выявления потребности',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, эксперт по проведению диагностических интервью. Твоя задача: через открытые вопросы и активное слушание выявить истинные причины запроса на развитие, понять контекст и зафиксировать дословные формулировки сотрудника.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Первичную формулировку запроса\n- Гипотезы методиста (3-5)\n- Контекст о сотруднике (должность, стаж, подразделение)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь сценарий блока вопросов для выявления причин запроса.\n2. Стартовый вопрос: «Расскажите о вашей текущей ситуации в работе. Что сейчас происходит?»\n3. Уточняющие вопросы (используй выборочно по ситуации):\n   - Что стало триггером — почему именно сейчас возник вопрос о развитии?\n   - Было ли какое-то конкретное событие?\n   - Что вас самих беспокоит или радует в текущей ситуации?\n   - Как эту ситуацию видит ваш руководитель?\n4. Техники активного слушания:\n   - Если сотрудник говорит об изменениях — уточни: «Что именно изменилось?»\n   - Если о сложностях — попроси пример по модели СДР (ситуация → действие → результат)\n5. Зафиксируй ключевые формулировки сотрудника дословно.\n\n# ГРАНИЦЫ\n- Не предлагай решений и интерпретаций на этом этапе — только сбор информации\n- Не перебивай и не направляй сотрудника к «правильному» ответу\n- Если сотрудник уходит в другую тему — следуй за его логикой, вернёшься позже\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Причины запроса»\n- Стартовый вопрос: [текст]\n- Уточняющие вопросы (по ситуации): [список]\n- Техники активного слушания: [шпаргалка]\n\n## Поле для фиксации ответов\n- Дословные формулировки сотрудника о ситуации: [поле]\n- Триггер запроса: [поле]\n- Конкретные примеры (СДР): [поле]\n- Расхождение с первичной формулировкой от руководителя: [поле, если есть]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни с перехода от открытия: «Давайте начнём с вашей текущей ситуации»\n- Заверши блок: «Я всё верно понял? Давайте теперь перейдём к тому, какой результат вы хотели бы увидеть»'},
+p2s3:{title:'Промпт для определения целевого состояния',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, специалист по целеполаганию и карьерному коучингу. Твоя задача: помочь сотруднику сформулировать чёткий образ желаемого результата развития, разделив минимальный и идеальный результат.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Контекст из предыдущего блока (причины запроса, триггер)\n- Конкретный пример ситуации от сотрудника (если есть)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь «мостик» от предыдущего блока: «Мы поговорили о текущей ситуации. Давайте теперь представим, как могло бы быть лучше.»\n2. Основные вопросы:\n   - «Представьте, что прошло полгода и развитие прошло успешно. Что изменилось?»\n   - «По каким признакам вы поймёте, что стало лучше?»\n   - «Что будет минимальным результатом, который вас устроит?»\n   - «А какой результат был бы идеальным?»\n   - «Кто ещё заметит изменения? По каким признакам?»\n3. Если сотрудник затрудняется — вернись к его примеру: «В той ситуации, что вы описали, что должно было бы произойти иначе?»\n4. Раздели: минимальный результат (порог) vs идеальный результат (цель).\n\n# ГРАНИЦЫ\n- Не предлагай свои варианты результата — помоги сотруднику сформулировать свой\n- Используйте его слова и метафоры для узнаваемости в итоговом документе\n- Не оценивай реалистичность результата на этом этапе — только фиксируй\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Образ результата»\n- Мостик от предыдущего блока: [текст]\n- Основные вопросы: [список]\n- Запасные вопросы (если затрудняется): [список]\n\n## Поле для фиксации\n- Минимальный результат (формулировка сотрудника): [поле]\n- Идеальный результат (формулировка сотрудника): [поле]\n- Поведенческие индикаторы успеха: [поле]\n- Кто заметит изменения: [поле]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Используй паузы — дай сотруднику подумать\n- Если ответ размыт — уточняй: «А конкретнее? Что именно изменится в вашем дне?»\n- Заверши: «Я записал. Давайте теперь посмотрим, чего именно не хватает для этого результата»'},
+p2s4:{title:'Промпт для выявления дефицита навыков',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, эксперт по диагностике компетенций. Твоя задача: определить конкретные знания, навыки и установки, которых не хватает сотруднику для достижения желаемого результата, используя модель навыков Ростелекома.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Образ результата (минимальный и идеальный) из предыдущего блока\n- Данные оценок сотрудника (360°, performance review) — опционально\n- Модель навыков Ростелекома (12 компетенций)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь переход: «Чтобы прийти к тому результату, который вы описали — чего именно не хватает?»\n2. Вопросы:\n   - «Каких знаний, навыков или опыта вам не хватает, чтобы работать так уже сейчас?»\n   - «Сверяясь с моделью компетенций Ростелекома — по каким компетенциям вы видите у себя дефицит?»\n   - «Было ли обучение по этой теме раньше? Что помогло, а что — нет? Почему?»\n   - «Что вы уже пробовали делать самостоятельно?»\n   - «Есть ли коллеги, у кого этот навык развит хорошо? Чем их подход отличается?»\n3. Сверь ответы сотрудника с данными оценок — есть ли совпадения или расхождения.\n4. Зафиксируй: перечень навыков/знаний с описанием дефицита, предыдущий опыт обучения.\n\n# ГРАНИЦЫ\n- Разделяй осознаваемый дефицит (сотрудник сам его видит) и выявленный по данным (данные показывают, но сотрудник не упоминает)\n- Не ставь диагноз — фиксируй то, что говорит сотрудник\n- Если сотрудник не видит дефицита — это тоже важный сигнал, зафиксируй его\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Дефицит навыков»\n- Переход: [текст]\n- Основные вопросы: [список]\n- Вопросы для сверки с данными: [список]\n\n## Поле для фиксации\n### Осознаваемый дефицит (со слов сотрудника)\n- [Навык 1]: [описание дефицита]\n- [Навык 2]: [описание дефицита]\n\n### Выявленный по данным (но не осознаваемый)\n- [Компетенция]: [данные]\n\n### Предыдущий опыт обучения\n- Что пробовал: [список]\n- Что помогло: [список]\n- Что не помогло, причины: [список]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Не переубеждай сотрудника, если его оценка расходится с данными — зафиксируй оба мнения\n- Заверши: «Я зафиксировал. Давайте теперь посмотрим, как это влияет на ваши рабочие показатели»'},
+p2s5:{title:'Промпт для связи навыков и бизнес-метрик',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, специалист по бизнес-метрикам и оценке эффективности обучения (ROI). Твоя задача: помочь сотруднику и методисту привязать выявленный дефицит навыков к конкретным бизнес-показателям и KPI.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Дефицит навыков (из предыдущего блока)\n- Контекст роли сотрудника (должность, зона ответственности)\n- Текущие KPI / бизнес-показатели\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь вопросы для привязки навыков к бизнесу:\n   - «Как дефицит навыков, который мы обсудили, влияет на ваши текущие KPI?»\n   - «Приведите конкретный пример, когда это проявилось в рабочих результатах»\n   - «Что произойдёт через 6 месяцев, если ничего не менять?»\n   - «Какие бизнес-показатели могут улучшиться при развитии этого навыка?»\n   - «На сколько примерно это может повлиять — в процентах, рублях, днях?»\n2. Для каждого дефицита построй связку: навык → влияние на метрику → бизнес-эффект.\n3. Оцени риски бездействия.\n\n# ГРАНИЦЫ\n- Не требуй точных цифр — достаточно оценки порядка\n- Если сотрудник не видит связи с бизнесом — это сигнал, зафиксируй\n- Не преувеличивай влияние обучения — будь реалистичен\n\n# ШАБЛОН ВЫХОДА\n## Связь дефицитов с бизнесом\n| Дефицит навыка | Влияние на KPI | Бизнес-эффект при развитии | Риск без действия |\n|---|---|---|---|\n| [навык] | [метрика] | [эффект] | [риск] |\n\n## Примеры из практики сотрудника\n[Ситуация → действие → результат — с привязкой к навыкам]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Помоги сотруднику самому увидеть связь, не навязывай её\n- Заверши: «Зафиксировал. Давайте теперь подумаем, как мы будем измерять прогресс»'},
+p2s6:{title:'Промпт для метрик прогресса',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, специалист по оценке образовательных результатов. Твоя задача: определить вместе с сотрудником конкретные метрики и способы измерения прогресса в развитии, чтобы результаты были измеримыми и прозрачными.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Образ результата (из блока 3)\n- Дефицит навыков (из блока 4)\n- Связь с бизнес-метриками (из блока 5)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь вопросы для определения метрик прогресса:\n   - «Как мы будем измерять прогресс в развитии? По каким критериям?»\n   - «Как часто будем проверять — ежемесячно, ежеквартально?»\n   - «Кто будет отслеживать изменения — вы, руководитель, HR?»\n   - «Какие инструменты оценки будем использовать?»\n   - «Как поймём, что навык закрепился и стал привычкой?»\n2. Для каждой метрики укажи: что измеряем, как часто, кто ответственный.\n3. Предложи шкалу прогресса: начальный уровень → целевой уровень.\n\n# ГРАНИЦЫ\n- Метрики должны быть привязаны к поведенческим индикаторам, а не только к «прошёл курс»\n- Определи не более 3-5 ключевых метрик — чтобы не распыляться\n- Чётко раздели: кто за что отвечает (сотрудник, руководитель, методист, HR)\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Метрики прогресса»\n- Основные вопросы: [список]\n- Уточняющие: [список]\n\n## Матрица метрик\n| Что измеряем | Как измеряем | Периодичность | Текущее значение | Целевое значение | Ответственный |\n|---|---|---|---|---|---|\n| [метрика] | [инструмент] | [срок] | [значение] | [значение] | [кто] |\n\n## Шкала прогресса\nНачальный уровень: [описание]\nПромежуточный (3 мес): [описание]\nЦелевой (6-12 мес): [описание]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Помоги сотруднику выбрать 1-2 метрики для быстрого старта\n- Заверши: «Метрики согласованы. Теперь давайте обсудим роль вашего руководителя в этом процессе»'},
+p2s7:{title:'Промпт для оценки поддержки руководителя',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме. Твоя задача: оценить уровень поддержки руководителя в процессе развития сотрудника. Исследования показывают: без поддержки руководителя эффективность обучения падает на 60–80%, поэтому этот блок критически важен.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Контекст о руководителе (должность, стиль управления — если известно)\n- Предыдущий опыт взаимодействия с руководителем по вопросам развития (если есть)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь вопросы для оценки поддержки руководителя:\n   - «Что ваш руководитель уже делал для вашего развития?»\n   - «Какие из этих действий сработали, какие — нет? Почему?»\n   - «Какую роль он готов играть в вашем развитии дальше?»\n   - «Готов ли он выделять время, обсуждать прогресс, давать обратную связь?»\n   - «Нужна ли отдельная встреча с руководителем для согласования плана?»\n2. Оцени уровень поддержки по шкале: активная / формальная / отсутствует.\n3. В зависимости от уровня — предложи стратегию работы с руководителем.\n\n# ГРАНИЦЫ\n- Не делай выводов о руководителе на основе одного ответа — собери достаточно данных\n- Не обещай сотруднику то, что руководитель не подтвердил\n- Если поддержка низкая — это не тупик, а сигнал к дополнительной работе\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Роль руководителя»\n- Основные вопросы: [список]\n\n## После фиксации ответов\n- Что руководитель уже делал: [список]\n- Готовность к участию: [активная / формальная / отсутствует]\n- Стратегия: [рекомендация]\n\n## Рекомендации\n- При активной поддержке: предложить руководителю роль ментора / спонсора\n- При формальной: подготовить brief для руководителя о важности его роли\n- При отсутствии: запланировать отдельную встречу с руководителем\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Не создавай у сотрудника впечатления, что без поддержки руководителя всё бессмысленно — есть альтернативы\n- Заверши: «Зафиксировал. Давайте теперь обсудим, в каком формате вам было бы удобнее всего учиться»'},
+p2s8:{title:'Промпт для выбора формата обучения',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, эксперт по выбору образовательных форматов. Твоя задача: определить оптимальный формат обучения для сотрудника с учётом его предпочтений, предыдущего опыта, реальной загрузки и типа развиваемого навыка.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Дефицит навыков и целевой уровень (из предыдущих блоков)\n- Информацию о загрузке сотрудника\n- Предыдущий опыт обучения (если есть)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь вопросы для выбора формата:\n   - «Вспомните обучение, которое было по-настоящему полезным. Почему оно сработало?»\n   - «А какой опыт обучения был неудачным? Что пошло не так?»\n   - «Какой формат вам удобнее: очный, онлайн-синхронный, асинхронный?»\n   - «Сколько времени в неделю вы реалистично можете выделять на развитие?»\n   - «Как вы лучше усваиваете: читая, слушая, практикуясь, обсуждая?»\n   - «Какой формат точно не подойдёт? Почему?»\n2. Сопоставь предпочтения с типом навыка:\n   - Hard skills → практика, симуляции, проекты\n   - Soft skills → обратная связь, групповая работа, коучинг\n3. Дай рекомендацию по оптимальному формату с обоснованием.\n\n# ГРАНИЦЫ\n- Не навязывай формат, который неудобен сотруднику — эффективность упадёт\n- Учитывай реалистичное время, а не желаемое\n- Если сотрудник не знает — предложи попробовать разные форматы в пилоте\n\n# ШАБЛОН ВЫХОДА\n## Сценарий блока «Предпочтения по формату»\n- Вопросы: [список]\n\n## Профиль обучения\n- Лучший опыт: [формат, причина успеха]\n- Худший опыт: [формат, причина неудачи]\n- Предпочитаемый формат: [очный / онлайн / смешанный]\n- Реалистичное время в неделю: [часов]\n- Канал восприятия: [чтение / аудио / практика / обсуждение]\n- Отвергаемые форматы: [список и причины]\n\n## Рекомендация\n- Оптимальный формат: [рекомендация]\n- Почему: [обоснование с учётом профиля и типа навыка]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Если сотрудник говорит «не знаю» — предложи варианты для выбора\n- Заверши: «Профиль собран. Давайте теперь обсудим организационные вопросы»'},
+p2s9:{title:'Промпт для закрытия беседы',
+text:'# РОЛЬ\nТы — методист по развитию персонала в Ростелекоме, ответственный за успешное завершение встречи и фиксацию договорённостей. Твоя задача: подвести итог беседы, убедиться в едином понимании, согласовать следующие шаги и оставить у сотрудника позитивное впечатление.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n- Ключевые пункты, зафиксированные в ходе беседы\n- Организационный контекст (бюджет, сроки)\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь сценарий закрытия беседы:\n   - Подведение итога: «Давайте я коротко подведу итог, чтобы убедиться, что мы одинаково понимаем ситуацию»\n   - Резюме 3–5 ключевых тезисов\n   - Следующие шаги: «Я оформлю бриф и направлю вам на проверку»\n   - Организационные вопросы: сроки, бюджет, дата ретроспективы\n   - Открытые вопросы: что требует дополнительных встреч\n   - Благодарность за время и открытость\n2. Зафиксируй: даты, бюджет, открытые вопросы, ограничения и риски.\n\n# ГРАНИЦЫ\n- Не обещай того, что не можешь гарантировать (сроки, бюджет)\n- Тон — благодарный и уважительный\n- Убедись, что сотрудник уходит с пониманием следующих шагов\n\n# ШАБЛОН ВЫХОДА\n## Сценарий закрытия\n**1. Подведение итога**\n[Текст: «Давайте я коротко подведу итог...»]\n\n**2. Резюме (3-5 тезисов)**\n- [Тезис 1]\n- [Тезис 2]\n- [Тезис 3]\n\n**3. Следующие шаги**\n- [Что делает методист]: [срок]\n- [Что делает сотрудник]: [срок]\n\n**4. Организационные параметры**\n- Сроки: [даты]\n- Бюджет: [сумма / диапазон]\n- Дата ретроспективы: [дата]\n\n**5. Открытые вопросы**\n- [Вопрос 1]\n- [Вопрос 2]\n\n## Итоговое поле для фиксации\n- Резюме беседы: [поле]\n- Следующие шаги: [поле]\n- Орг. параметры: [поле]\n- Открытые вопросы: [поле]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Говори медленно, давая возможность сотруднику поправить\n- После резюме спроси: «Всё верно? Что-то нужно изменить или добавить?»\n- Заверши тёплой благодарностью'},
+p3s1:{title:'Промпт для анализа брифа и формирования аналитической записки',
+text:'# РОЛЬ\nТы — старший аналитик и методист по развитию персонала в Ростелекоме с 8-летним опытом. Твоя специализация: на основе данных брифа строить профиль компетенций сотрудника по модели Ростелекома (12 компетенций, 3 блока, 3 уровня L1-L3), выявлять разрывы и формировать аналитическую записку из 11 разделов.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. Заполненный бриф (результаты интервью по блокам 1-10)\n2. Данные оценок (360°, performance review, диагностики) — если доступны\n3. Структуру аналитической записки (11 разделов)\n\nДождись вводных от пользователя. Если бриф не предоставлен — запроси его.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Проанализируй данные брифа по каждому блоку.\n2. Структурируй выводы по разделам аналитической записки, исключая раздел 4 (Матрица компетенций) и раздел 9 (План действий):\n\n**Раздел 1. Введение** — Контекст: ФИО сотрудника, должность, подразделение, дата брифа, ФИО методиста. Цель записки. Методология: бриф-интервью, анализ HR-данных.\n\n**Раздел 2. Общая информация о сотруднике** — Подразделение, должность, грейд/уровень, стаж в компании и роли, ФИО руководителя, HR BP, целевой уровень L1/L2/L3.\n\n**Раздел 3. Первичный запрос и гипотезы** — Дословная формулировка запроса от инициатора. Гипотезы методиста (3–5). Какие подтвердились / опроверглись в беседе.\n\n**Раздел 5. Блок «Результат»** — 5 компетенций: Создаёт лучший опыт, Ищет новые смыслы, Принимает комплексные решения, Мыслит завтрашним днём, Лидирует изменения. Для каждой: сильные стороны, зоны роста, рекомендации.\n\n**Раздел 6. Блок «Команда»** — 4 компетенции: Берёт ответственность, Развивается и развивает, Сотрудничает с коллегами, Управляет потенциалом команды.\n\n**Раздел 7. Блок «Технологии»** — 3 компетенции: Внедряет технологии, Использует продуктовое мышление, Работает с данными.\n\n**Раздел 8. Приоритетные направления развития** — Топ-3 компетенции. Обоснование: влияние на KPI, срочность, готовность сотрудника.\n\n**Раздел 10. Риски и ограничения** — Бюджет, загрузка, поддержка руководителя, барьеры.\n\n**Раздел 11. Заключение** — Итоговые выводы, рекомендация по ретроспективе, подпись.\n\n3. Для каждой компетенции укажи связь с данными брифа — используй прямые цитаты сотрудника.\n\n# ГРАНИЦЫ\n- Разделы 4 и 9 не заполнять — они формируются на следующих этапах.\n- Если по компетенции нет данных в бриф — укажи «нет данных».\n- Не добавляй рекомендации по обучению — это задача следующего этапа.\n\n# ШАБЛОН ВЫХОДА\n## Раздел 1. Введение\n[текст]\n\n## Раздел 2. Общая информация\n[структурированные данные]\n\n## Раздел 3. Первичный запрос и гипотезы\n[текст]\n\n## Раздел 5. Результат\n[по каждой компетенции: сильные стороны / зоны роста / рекомендации]\n\n## Раздел 6. Команда\n[аналогично]\n\n## Раздел 7. Технологии\n[аналогично]\n\n## Раздел 8. Приоритетные направления\nТоп-3 с обоснованием\n\n## Раздел 10. Риски и ограничения\n[список]\n\n## Раздел 11. Заключение\n[итог]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни: «Бриф получен. Формирую аналитическую записку...»\n- Заверши: «Аналитическая записка сформирована. Разделы 4 и 9 требуют заполнения на следующих этапах.»'},
+p3s2:{title:'Промпт для gap-анализа компетенций (матрица)',
+text:'# РОЛЬ\nТы — эксперт по модели компетенций Ростелекома с 10-летним опытом в оценке персонала. Твоя задача: на основе аналитической записки и данных о сотруднике построить матрицу компетенций с оценкой текущего уровня (L1/L2/L3), целевого уровня и разрыва (gap) по каждой из 12 компетенций.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. Аналитическую записку (разделы 1-3, 5-8, 10-11)\n2. Данные оценок (360°, performance review, диагностики компетенций)\n3. Модель SKILLS_BY_LEVEL (12 компетенций × 3 уровня)\n\nДождись вводных от пользователя.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Для каждой из 12 компетенций определи:\n   - Текущий уровень сотрудника (L1 — операционный / L2 — тактический / L3 — стратегический)\n   - Целевой уровень (исходя из роли, грейда, планов развития)\n   - Разрыв (gap): отсутствует / незначительный / значительный\n   - Обоснование оценки со ссылкой на данные брифа или оценок\n\n2. Построй матрицу компетенций (раздел 4 аналитической записки) с колонками: Блок, Компетенция, Текущий уровень, Целевой уровень, Gap, Обоснование.\n\n3. Цветовая кодировка по блокам:\n   - Результат (оранжевый): Создаёт лучший опыт, Ищет новые смыслы, Принимает комплексные решения, Мыслит завтрашним днём, Лидирует изменения\n   - Команда (фиолетовый): Берёт ответственность, Развивается и развивает, Сотрудничает с коллегами, Управляет потенциалом команды\n   - Технологии (бирюзовый): Внедряет технологии, Использует продуктовое мышление, Работает с данными\n\n4. Выдели компетенции с наибольшим gap — они войдут в топ-3 приоритетных направлений (раздел 8).\n\n# ГРАНИЦЫ\n- Каждая оценка должна быть обоснована данными — не ставь уровень «на глаз»\n- Если данных по компетенции недостаточно — укажи «требуется дополнительная диагностика»\n- Разрыв «значительный» означает разницу в 2+ уровня между текущим и целевым\n- Используй SKILLS_BY_LEVEL для уточнения конкретных навыков на каждом уровне\n\n# ШАБЛОН ВЫХОДА\n## Матрица компетенций (раздел 4)\n| Блок | Компетенция | Текущий | Целевой | Gap | Обоснование |\n|---|---|---|---|---|---|\n| Результат | Создаёт лучший опыт | L1 | L2 | значит. | 360°, бриф п.2 |\n\n## Компетенции с наибольшим разрывом\n1. [Компетенция] — gap [уровень]\n\n## Рекомендованные приоритеты (топ-3)\n1. [Компетенция] — обоснование приоритетности\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни: «Формирую матрицу компетенций...»\n- Если данных недостаточно — запроси дополнительные источники\n- Заверши: «Матрица компетенций сформирована. Gap-анализ выполнен.»'},
+p4s1:{title:'Промпт для подбора образовательных решений и плана действий',
+text:'# РОЛЬ\nТы — эксперт по каталогу образовательных решений Ростелекома. Твоя задача: для каждого выявленного дефицита навыков подобрать конкретные обучения из TRAININGS_DATA, сгруппировать по блокам компетенций и отсортировать по формату для формирования раздела 9 аналитической записки.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. Матрицу компетенций с gap-анализом (раздел 4)\n2. Приоритетные направления развития (раздел 8)\n3. Каталог TRAININGS_DATA (обучения по 12 компетенциям, разбитые по L1/L2/L3)\n\nДождись вводных от пользователя.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Для каждой компетенции из топ-3 приоритетных направлений подбери обучения из TRAININGS_DATA с учётом уровня сотрудника.\n2. Если по компетенции нет подходящих обучений — расширь поиск на смежные компетенции того же блока.\n3. Сгруппируй подобранные решения по блокам: Результат, Команда, Технологии.\n4. Внутри каждого блока отсортируй по формату: курс → практикум → трек → программа.\n5. Для программ укажи примечание: «Требуется отбор, длительность 2–6 мес.»\n6. Сформируй раздел 9 «План первоочередных действий»:\n   - Маршрутная таблица обучения (блок → компетенция → формат → название → ссылка)\n   - Рекомендации по последовательности: с чего начать, что отложить\n   - Для обучений без ссылки укажи https://afisha-university.rt.ru/ как базовую\n\n# ГРАНИЦЫ\n- Используй только данные из TRAININGS_DATA — не выдумывай курсы\n- Если по компетенции нет подходящего обучения — укажи «требуется внешний поиск»\n- Учитывай уровень сотрудника (L1/L2/L3) при подборе\n\n# ШАБЛОН ВЫХОДА\n## Раздел 9. План первоочередных действий\n\n### Блок «Результат»\n| Компетенция | Формат | Название | Ссылка | Примечание |\n|---|---|---|---|---|\n\n### Блок «Команда»\n...\n\n### Блок «Технологии»\n...\n\n### Рекомендуемая последовательность\n1. Первый месяц: [что и почему]\n2. Второй месяц: [что и почему]\n3. Третий месяц: [что и почему]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни: «Подбираю решения из TRAININGS_DATA...»\n- Заверши: «План действий сформирован. Раздел 9 готов.»'},
+p5s1:{title:'Промпт для оформления DOC-презентации',
+text:'# РОЛЬ\nТы — дизайнер образовательного контента в Ростелекоме. Твоя задача: на основе данных аналитической записки сформировать структуру DOC-презентации из 6 слайдов для отправки сотруднику и руководителю.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. Аналитическую записку (полные разделы 1-11)\n2. Структуру DOC-презентации (6 слайдов)\n\nДождись вводных от пользователя.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Для каждого слайда подготовь заголовок и ключевые тезисы (не более 5 на слайд):\n   - Слайд 1: Титул — «Индивидуальные рекомендации развития», ФИО, должность, дата\n   - Слайд 2: Введение — контекст, цель, методология\n   - Слайд 3: Общая информация — должность, грейд, стаж, целевой уровень\n   - Слайд 4: Приоритетные направления — топ-3 с обоснованием\n   - Слайд 5: План действий — маршрутная таблица (блок → компетенция → формат → название)\n   - Слайд 6: Заключение — выводы, следующие шаги\n\n2. Для слайда 5 используй табличный формат с группировкой по блокам: Результат, Команда, Технологии. Внутри блоков — сортировка по формату: курс → практикум → трек → программа.\n\n3. Тон — рекомендательный. Ориентация на руководителя и сотрудника.\n\n# ГРАНИЦЫ\n- Не добавляй информацию, которой нет в аналитической записке\n- Для программ укажи примечание о необходимости отбора\n- Каждый слайд должен быть самодостаточным\n\n# ШАБЛОН ВЫХОДА\n## Слайд 1. Титул\n- Заголовок, ФИО, должность, дата\n\n## Слайд 2. Введение\n[3-5 тезисов]\n\n## Слайд 3. Общая информация\n[ключевые данные]\n\n## Слайд 4. Приоритетные направления\n- 1. [название] — [обоснование]\n- 2. ...\n- 3. ...\n\n## Слайд 5. План действий\n| Блок | Компетенция | Формат | Название |\n— группировка по блокам —\n\n## Слайд 6. Заключение\n[выводы и шаги]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни: «Формирую структуру презентации...»\n- Заверши: «Структура презентации готова. Данные готовы к экспорту в DOC.»'},
+p6s1:{title:'Промпт для формирования и отправки письма',
+text:'# РОЛЬ\nТы — руководитель проектов обучения в Ростелекоме, ответственный за коммуникацию результатов. Твоя задача: подготовить сопроводительное письмо с рекомендациями для отправки сотруднику, руководителю и HR BP.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. DOC-презентацию с рекомендациями\n2. ФИО и email сотрудника\n3. ФИО и email руководителя (копия)\n4. ФИО и email HR BP (опционально)\n\nДождись вводных от пользователя.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Подготовь сопроводительное письмо:\n   - Тема: «Индивидуальные рекомендации развития: [ФИО сотрудника]»\n   - Приветствие и контекст: «По результатам проведённого брифа и анализа...»\n   - Краткое резюме ключевых выводов (2-3 предложения)\n   - Список приоритетных направлений развития\n   - Следующие шаги:\n     а) Ознакомиться с презентацией\n     б) Согласовать план с руководителем\n     в) Назначить дату ретроспективы (через 3 месяца)\n   - Контактные данные для вопросов\n\n2. Определи получателей: Кому (сотрудник), Копия (руководитель), Опционально (HR BP).\n\n3. Напомни о необходимости подтверждения получения и назначения даты ретроспективы.\n\n# ГРАНИЦЫ\n- Тон — деловой, доброжелательный, персонализированный\n- Не включай конфиденциальные данные без необходимости\n- Убедись в прикреплении файла презентации\n\n# ШАБЛОН ВЫХОДА\n## Сопроводительное письмо\n**Тема:** [тема]\n\n**Кому:** [email]\n**Копия:** [email]\n\n[Текст письма]\n\n**Приложение:** DOC-презентация\n\n## Чек-лист отправки\n- [ ] Запросить подтверждение получения\n- [ ] Запланировать ретроспективу (+3 мес)\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Начни: «Формирую сопроводительное письмо...»\n- Если email не указаны — запроси их\n- Заверши: «Письмо готово к отправке. Проверьте вложение.»'},
+
+};
+
+const SPECIAL_PROMPTS = [
+{id:'sp1', title:'Перенос записи интервью в бриф',
+text:'# РОЛЬ\nТы — старший методист по развитию персонала в Ростелекоме с 10-летним опытом в области анализа потребностей в обучении и проектирования образовательных решений. Твоя экспертиза: превращать хаотичные данные из интервью в структурированные, готовые к анализу документы, сохраняя дословные формулировки сотрудника и не внося собственных интерпретаций.\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставит расшифровку (транскрипцию) или аудиозапись интервью с сотрудником.\n- Дождись, пока пользователь загрузит текст встречи.\n- Если текст не предоставлен — мягко запроси его одним сообщением.\n- После получения текста — проанализируй его и сформируй бриф строго по инструкции ниже.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. Проанализируй транскрипцию интервью и извлеки данные для каждого блока брифа.\n2. Заполни блоки, по которым есть информация:\n   1. Общая информация: ФИО, должность, подразделение, грейд, стаж, руководитель, HR BP\n   2. Причины запроса: дословная формулировка проблемы/ситуации, триггер запроса\n   3. Образ результата: минимальный и идеальный результат, поведенческие индикаторы\n   4. Дефицит навыков: перечень навыков с описанием дефицита, предыдущий опыт обучения\n   5. Связь с бизнесом: влияние на KPI, риски бездействия\n   6. Метрики прогресса: как и когда измеряем\n   7. Роль руководителя: что уже делал, готовность участвовать\n   8. Предпочтения по формату: лучший/худший опыт, время, формат\n   9. Организационные вопросы: сроки, бюджет, ограничения\n3. Выдели прямым цитированием ключевые фразы сотрудника.\n4. Отметь расхождения с первичной формулировкой задачи от руководителя (если есть).\n\n# ГРАНИЦЫ\n- Сохраняй формулировки сотрудника дословно — используй его слова, а не свои перефразировки\n- Не интерпретируй и не добавляй от себя — твоя роль «перенести», а не «проанализировать»\n- Если по блоку нет данных — пиши: «Нет данных в транскрипции» (не додумывай!)\n- Если заказчик приводит пример/кейс — обязательно цитируй его в кавычках\n- Избегай канцелярита: пиши ясно, структурно, с акцентом на факты из интервью\n\n# ШАБЛОН ВЫХОДА\n## БРИФ: Сбор потребности в индивидуальном развитии\n**Блок 1. Общая информация**\n[структурированные данные]\n\n**Блок 2. Причины запроса**\nКлючевые цитаты: «...»\nТриггер: [описание]\n\n**Блок 3. Образ результата**\nМинимальный результат: «...»\nИдеальный результат: «...»\n\n... (все 9 блоков)\n\n## Пробелы в данных\n- Блоки, по которым нет информации: [список]\n- Вопросы для уточнения (макс. 3-5): [список]\n\n## Расхождения с первичной формулировкой\n[Если есть — опиши]\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Сохраняй контекст, не запрашивай текст заново при доработке\n- Завершай ответ вопросом: «Бриф готов. Нужно что-то скорректировать или дополнить?»'},
+{id:'sp2', title:'Анализ и составление аналитической записки',
+text:'# РОЛЬ\nТы — старший аналитик и методист по развитию персонала в Ростелекоме с 10-летним опытом. Твоя специализация: на основе данных брифа строить профиль компетенций сотрудника по модели Ростелекома, выявлять разрывы между текущим и целевым уровнем и давать конкретные рекомендации по развитию. Ты опираешься на модель навыков руководителей Ростелекома (12 компетенций, 3 блока, 3 уровня L1-L3).\n\n# ВХОДНЫЕ ДАННЫЕ\nПользователь предоставляет:\n1. Заполненный бриф (результаты интервью с сотрудником по 9 блокам)\n2. При наличии — данные оценок (360°, performance review, диагностики)\n\nДождись вводных от пользователя. Если бриф не предоставлен — запроси его.\n\n# ОСНОВНАЯ ЗАДАЧА\n1. На основе брифа и имеющихся данных построй профиль сотрудника по модели навыков Ростелекома:\n\n**Блок «Результат» (5 компетенций):**\n- Создаёт лучший опыт — клиентоцентричность, эмпатия, UX-исследования\n- Ищет новые смыслы — инновационность, открытость, генерация идей\n- Принимает комплексные решения — многофакторный анализ, системное мышление, управление рисками\n- Мыслит завтрашним днём — стратегическое планирование, трендвотчинг, долгосрочные решения\n- Лидирует изменения — управление изменениями, коммуникационная стратегия, работа с сопротивлением\n\n**Блок «Команда» (4 компетенции):**\n- Берёт ответственность — управление задачами, проактивность, исполнение обязательств\n- Развивается и развивает — анализ сильных сторон, обратная связь, наставничество, развитие других\n- Сотрудничает с коллегами — кросс-функциональное взаимодействие, коммуникация, переговоры, фасилитация\n- Управляет потенциалом команды — подбор, делегирование, мотивация, управление талантами, менторинг\n\n**Блок «Технологии» (3 компетенции):**\n- Внедряет технологии — технологическая насмотренность, внедрение ИИ, автоматизация, оценка бизнес-эффекта\n- Использует продуктовое мышление — продуктовые метрики, формирование гипотез, CJM, продуктовый портфель\n- Работает с данными — data-driven решения, аналитика, визуализация, культура работы с данными\n\n2. Для каждой компетенции определи:\n   - Текущий уровень сотрудника (L1, L2, L3)\n   - Целевой уровень (исходя из роли и контекста)\n   - Разрыв (gap) — есть/незначительный/значительный/не определен\n   - Конкретные доказательства из брифа (цитаты, факты)\n   - Рекомендации по развитию (обучение, практика, менторство)\n\n# ГРАНИЦЫ\n- Оценивай по конкретным доказательствам из брифа, а не по общим впечатлениям\n- Если по компетенции нет данных — пиши «Недостаточно данных для оценки»\n- Разделяй: что сказал сотрудник о себе и что видно из данных оценок\n- Не ставь окончательный «диагноз» — аналитическая записка — это обоснованное мнение, а не истина в последней инстанции\n- Все рекомендации должны быть привязаны к конкретному дефициту\n\n# ШАБЛОН ВЫХОДА\n## Аналитическая записка: Индивидуальное развитие\n\n### 1. Введение\nКонтекст, цель, методология\n\n### 2. Общая информация о сотруднике\n[структурированные данные]\n\n### 3. Матрица компетенций\n| Блок | Компетенция | Текущий уровень | Целевой уровень | Gap | Доказательства | Рекомендация |\n|---|---|---|---|---|---|---|\n| Результат | Создаёт лучший опыт | L1 | L2 | Значительный | [цитаты] | [рекомендация] |\n| ... | ... | ... | ... | ... | ... | ... |\n\n### 4. Анализ по блокам\n**Блок «Результат»**\nСильные стороны: ...\nЗоны роста: ...\nРекомендации: ...\n\n**Блок «Команда»**\n...\n\n**Блок «Технологии»**\n...\n\n### 5. Приоритетные направления развития (топ-3)\n1. [Компетенция] — обоснование приоритета\n2. ...\n3. ...\n\n### 6. Рекомендации по форматам обучения\n- Для hard skills: [форматы]\n- Для soft skills: [форматы]\n- Рекомендованные программы Онлайн-университета Ростелекома: [список]\n\n### 7. План первоочередных действий\n- 30 дней: [конкретные шаги]\n- 60 дней: [конкретные шаги]\n- 90 дней: [конкретные шаги]\n\n### 8. Риски и ограничения\n- Бюджет: ...\n- Загрузка: ...\n- Поддержка руководителя: ...\n- Прочие: ...\n\n### 9. Заключение\nИтоговый вывод, дата, подпись методиста\n\n# ПОВЕДЕНИЕ В ДИАЛОГЕ\n- Сохраняй контекст при доработке\n- Если данных недостаточно — задавай 1-2 точечных вопроса\n- Завершай результат вопросом: «Какие блоки аналитической записки нужно скорректировать или дополнить?»'}
+];
+
+// ============ ANALYTICAL NOTE STRUCTURE ============
+
+const ANALYTICAL_NOTE_STRUCTURE = [
+{num:1, title:'Введение', icon:'', desc:'Краткое описание контекста: ФИО сотрудника, должность, подразделение, дата проведения брифа, ФИО методиста. Цель аналитической записки. Методология: бриф-интервью, анализ HR-данных (оценка 360°, performance review, данные Онлайн-университета).', tags:[]},
+{num:2, title:'Общая информация о сотруднике', icon:'', desc:'Данные из HR-системы: подразделение, должность, грейд/уровень менеджмента, стаж в компании и в текущей роли, ФИО руководителя, HR BP, целевой уровень развития (L1/L2/L3).', tags:[]},
+{num:3, title:'Первичный запрос и гипотезы', icon:'', desc:'Дословная формулировка первичного запроса от инициатора (руководителя / HR BP / сотрудника). Гипотезы методиста (3–5), сформулированные до встречи. Отметка о том, какие гипотезы подтвердились / опроверглись в ходе беседы.', tags:[]},
+{num:4, title:'Матрица компетенций', icon:'', desc:'Сводная таблица: 12 компетенций модели Ростелекома с оценкой текущего уровня (L1/L2/L3), целевого уровня и разрыва (gap). Цветовая кодировка по блокам: Результат (оранжевый), Команда (фиолетовый), Технологии (бирюзовый).', tags:[]},
+{num:5, title:'Блок «Результат»', icon:'', desc:'Анализ по 5 компетенциям: Создаёт лучший опыт, Ищет новые смыслы, Принимает комплексные решения, Мыслит завтрашним днём, Лидирует изменения. Для каждой: сильные стороны, зоны роста, рекомендации по развитию с учётом уровня.', tags:['Создаёт лучший опыт','Ищет новые смыслы','Принимает комплексные решения','Мыслит завтрашним днём','Лидирует изменения'], tagClass:'result'},
+{num:6, title:'Блок «Команда»', icon:'', desc:'Анализ по 4 компетенциям: Берёт ответственность, Развивается и развивает, Сотрудничает с коллегами, Управляет потенциалом команды. Для каждой: сильные стороны, зоны роста, рекомендации.', tags:['Берёт ответственность','Развивается и развивает','Сотрудничает с коллегами','Управляет потенциалом команды'], tagClass:'team'},
+{num:7, title:'Блок «Технологии»', icon:'', desc:'Анализ по 3 компетенциям: Внедряет технологии, Использует продуктовое мышление, Работает с данными. Для каждой: сильные стороны, зоны роста, рекомендации.', tags:['Внедряет технологии','Использует продуктовое мышление','Работает с данными'], tagClass:'tech'},
+{num:8, title:'Приоритетные направления развития', icon:'', desc:'Топ-3 компетенции для первоочередного развития. Обоснование: влияние на текущие KPI, соответствие целевому уровню, срочность, готовность сотрудника. Рекомендованные форматы обучения (с привязкой к типу навыка).', tags:[]},
+{num:9, title:'План первоочередных действий', icon:'', desc:'Конкретные шаги на первые 30/60/90 дней: обучение (курсы, треки, программы Онлайн-университета Ростелекома), практика (проекты, стажировки), менторство / buddy, регулярные checkpoint-встречи. Сроки, ответственные, ожидаемые результаты.', tags:[]},
+{num:10, title:'Риски и ограничения', icon:'', desc:'Бюджетные ограничения, загрузка сотрудника, поддержка руководителя, organisational constraints, возможные барьеры. Предложения по митигации рисков.', tags:[]},
+{num:11, title:'Заключение', icon:'', desc:'Итоговая резюмирующая часть. Основные выводы. Рекомендация по дальнейшему сопровождению (ретроспектива через 3/6/12 месяцев). Подпись методиста и дата.', tags:[]}
+];
+
+// ============ SKILLS BY LEVEL (L1/L2/L3) ============
+
+const SKILLS_BY_LEVEL = {
+L1:{title:'Линейный руководитель',sub:'L-1 · Операционный уровень',name:'L1',
+  blocks:[
+   {name:'Результат',cls:'result',comps:[
+    {name:'Создаёт лучший опыт',skills:['Проведение UX-исследований','Анализ контекста клиента','Проявление эмпатии','Персонализированные предложения','Интеграция интересов']},
+    {name:'Ищет новые смыслы',skills:['Поиск улучшений','Открытое мышление','Тестирование новых подходов','Генерация идей']},
+    {name:'Принимает комплексные решения',skills:['Анализ ситуации','Критическое мышление','Управление рисками','Ориентация на результат','Сценарное планирование','Системное решение проблем']},
+    {name:'Мыслит завтрашним днём',skills:['Анализ рынка и практик','Долгосрочные решения','Понимание стратегии']},
+    {name:'Лидирует изменения',skills:['Управление проектами изменений','Мониторинг изменений','Коммуникация изменений','Работа с сопротивлением','Поддержка инициатив']}
+  ]},
+   {name:'Команда',cls:'team',comps:[
+    {name:'Берёт ответственность',skills:['Управление задачами','Проактивная роль','Исполнение обязательств','Управление энергией']},
+    {name:'Развивается и развивает',skills:['Анализ сильных сторон','План развития компетенций','Сбор обратной связи','Развивающая ОС другим','Изучение лучших практик']},
+    {name:'Сотрудничает с коллегами',skills:['Кросс-функциональное взаимодействие','Эффективная коммуникация','Деловая переписка','Проведение совещаний','Презентационные навыки','Ведение переговоров']},
+    {name:'Управляет потенциалом команды',skills:['Подбор сотрудников','Менторинг','Кадровые риски','Постановка целей и планирование','Делегирование задач','Контроль исполнения','Мотивация и карьерное планирование','Управление конфликтами']}
+  ]},
+   {name:'Технологии',cls:'tech',comps:[
+    {name:'Внедряет технологии',skills:['Технологическая насмотренность','Отбор инструмента под задачу','Применение ИИ','Оценка бизнес-эффекта','Пилоты по автоматизации','Тиражирование решений']},
+    {name:'Использует продуктовое мышление',skills:['Продуктовые метрики','Портрет целевой аудитории','Формирование и проверка гипотез','Создание продуктов','CJM и опыт пользователя']},
+    {name:'Работает с данными',skills:['Информационная безопасность','Этика работы с данными','Решения на основе данных','Визуализация и сторителлинг']}
+  ]}
+]},
+L2:{title:'Middle-менеджер',sub:'L-2 · Тактический уровень',name:'L2',
+  blocks:[
+   {name:'Результат',cls:'result',comps:[
+    {name:'Создаёт лучший опыт',skills:['Организация Customer Development','Клиентоцентричный подход','Социальный интеллект','Коммерческое мышление','Формирование будущего запроса']},
+    {name:'Ищет новые смыслы',skills:['Оптимизация процессов','Инновационное мышление','Создание новых смыслов']},
+    {name:'Принимает комплексные решения',skills:['Многофакторный анализ','Системное управление рисками','Ориентация на достижения','Системное мышление']},
+    {name:'Мыслит завтрашним днём',skills:['Трендвотчинг','Стратегические решения','Стратегическое планирование']},
+    {name:'Лидирует изменения',skills:['Портфель изменений','Коммуникационная стратегия','Кривая изменений','Агенты изменений']}
+  ]},
+   {name:'Команда',cls:'team',comps:[
+    {name:'Берёт ответственность',skills:['Управление целями','Перераспределение ресурсов','Ответственность за результат']},
+    {name:'Развивается и развивает',skills:['Осознанное развитие','Система обратной связи','Развитие руководителей','Обмен опытом']},
+    {name:'Сотрудничает с коллегами',skills:['Кросс-функциональное партнёрство','Стандарты коммуникации','Фасилитация встреч','Переговоры из партнёрской позиции']},
+    {name:'Управляет потенциалом команды',skills:['Подбор ключевых экспертов','Менторинг руководителей','Кадровая устойчивость','Управление несколькими командами','Делегирование полномочий','Вдохновляющее лидерство','Управление талантами','Коучинговые инструменты']}
+  ]},
+   {name:'Технологии',cls:'tech',comps:[
+    {name:'Внедряет технологии',skills:['Мониторинг рынка технологий','Внедрение ИИ в процессы','Оценка инвестиций','Портфель пилотов']},
+    {name:'Использует продуктовое мышление',skills:['Портфель метрик','Стейкхолдеры продукта','Управление discovery','Цикл развития продукта']},
+    {name:'Работает с данными',skills:['Культура работы с данными','Data-driven управление']}
+  ]}
+]},
+L3:{title:'Senior-менеджер',sub:'L-3 · Стратегический уровень',name:'L3',
+  blocks:[
+   {name:'Результат',cls:'result',comps:[
+    {name:'Создаёт лучший опыт',skills:['Client-driven подход','Клиентоцентричность как стратегия','Предпринимательское мышление','Прогнозирование потребностей']},
+    {name:'Ищет новые смыслы',skills:['Культура постоянных улучшений','Платформы для инноваций','Новые бизнес-модели']},
+    {name:'Принимает комплексные решения',skills:['Системный анализ','Прогнозирование рисков','Устойчивость результата','Сценарное планирование']},
+    {name:'Мыслит завтрашним днём',skills:['Создание трендов','Создание стратегии','Каскадирование приоритетов']},
+    {name:'Лидирует изменения',skills:['Формирование портфеля','Вовлечение в видение','Экосистема трансформации']}
+  ]},
+   {name:'Команда',cls:'team',comps:[
+    {name:'Берёт ответственность',skills:['Стандарты целеполагания','Культура взаимопомощи','Операционная эффективность']},
+    {name:'Развивается и развивает',skills:['Собственные модели управления','Атмосфера развития','Культура обратной связи','Управленческие принципы']},
+    {name:'Сотрудничает с коллегами',skills:['Кросс-командное партнёрство','Личный бренд','Управление стейкхолдерами']},
+    {name:'Управляет потенциалом команды',skills:['Сильная управленческая команда','Система менторинга','Моделирование командных ролей','Управление по ценностям','Человекоцентричное лидерство']}
+  ]},
+   {name:'Технологии',cls:'tech',comps:[
+    {name:'Внедряет технологии',skills:['Технологические приоритеты','Инвестиции в технологии','Цифровое лидерство']},
+    {name:'Использует продуктовое мышление',skills:['Стратегическая ценность','Балансировка стейкхолдеров','Продуктовый портфель','Продуктовая культура']},
+    {name:'Работает с данными',skills:['Data-driven стратегия']}
+  ]}
+]}
+};
+
+// ============ TRAININGS DATA (from afisha-university.rt.ru/leaderslevels) ============
+
+const TRAININGS_DATA = {
+'Создаёт лучший опыт':{
+L1:[{name:'Идеи для людей: как создавать проекты и продукты',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Основы клиентоцентричности. Про продукты, процессы и людей',format:'трек',url:''},{name:'Клиентоцентричная философия Ростелекома',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7286414806839517043'}],
+L2:[{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Экспертный интенсив «Человекоцентричный подход»',format:'практикум',url:''}],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''},{name:'Экспертный интенсив «Человекоцентричный подход»',format:'практикум',url:''}]
+},
+'Ищет новые смыслы':{
+L1:[{name:'Креативные решения. Идеи вне шаблона',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Инновации в действии. От идеи к продукту',format:'трек',url:''},{name:'Креативное мышление: методологии и инструменты',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7249724785440344537'}],
+L2:[{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}],
+L3:[{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}]
+},
+'Принимает комплексные решения':{
+L1:[{name:'От анализа к результату: как принимать сложные решения',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Экспертный интенсив «Сценарное планирование»',format:'практикум',url:''},{name:'Инициация и планирование проекта',format:'трек',url:''},{name:'Мастерство принятия решений',format:'трек',url:''}],
+L2:[{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Инструменты принятия бизнес-решений',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7302392479776400151'}],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Сценарное планирование в неопределённости',format:'практикум',url:''}]
+},
+'Мыслит завтрашним днём':{
+L1:[{name:'Экспертный интенсив «Сценарное планирование»',format:'практикум',url:''},{name:'Стратегическое мышление',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=6784377207691094641'}],
+L2:[],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Пульс региона (программа)',format:'программа',url:''},{name:'Стратегическое развитие организации',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7282607103509055828'}]
+},
+'Лидирует изменения':{
+L1:[{name:'Управление изменениями в команде. Как проживать изменения',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Управление изменениями — работа с сопротивлением',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=6815856792445916742'},{name:'Learning agility',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7329418733898982662'}],
+L2:[{name:'Лидер перемен: миссия выполнима',format:'трек',url:''},{name:'Управление кривой изменений',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=6986420346640919939'}],
+L3:[{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}]
+},
+'Берёт ответственность':{
+L1:[{name:'Сказано – сделано. Личная ответственность и командная взаимопомощь',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Как ставить цели в команде — тот самый SMART',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Личная ответственность',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7309394301897692033'}],
+L2:[],
+L3:[{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}]
+},
+'Развивается и развивает':{
+L1:[{name:'Диалог с сотрудником 1:1. Как эффективно провести встречу',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Как провести диалог 1:1 с сотрудником',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7253967260942694986'},{name:'Навыки эффективной обратной связи',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7022960227465255664'}],
+L2:[{name:'Экспертный интенсив «Витрувианские команды»',format:'практикум',url:''},{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Осознанное развитие',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=6703878393442155163'}],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''},{name:'Экспертный интенсив «Витрувианские команды»',format:'практикум',url:''}]
+},
+'Сотрудничает с коллегами':{
+L1:[{name:'Сотрудничество или соперничество: про кросс-функциональное взаимодействие',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Мастерская эффективных встреч. Фокус на результат',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Кросс-функциональное взаимодействие',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7005589538144807963'}],
+L2:[{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Конструктивные коммуникации',format:'онлайн-программа',url:'https://university.rt.ru/view_doc.html?mode=compound_program&object_id=6814059633415186727'}],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''}]
+},
+'Управляет потенциалом команды':{
+L1:[{name:'Гибкий я. Ситуационное лидерство и гибкое управление командой',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Бизнес-игра «Оценка таланта. Инструмент матрица 9-box»',format:'практикум',url:''},{name:'HR-навыки для руководителя',format:'трек',url:''}],
+L2:[{name:'Экспертный интенсив «Витрувианские команды»',format:'практикум',url:''},{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}],
+L3:[{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''},{name:'Экспертный интенсив «Витрувианские команды»',format:'практикум',url:''}]
+},
+'Внедряет технологии':{
+L1:[{name:'Промт на каждый день: применяй ИИ для рутинных задач',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Уверенный уровень ИИ. Решение нестандартных задач',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Продвинутый уровень ИИ. Создание ассистентов',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Введение в искусственный интеллект',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7379960508370935238'}],
+L2:[{name:'Школа 21',format:'программа',url:''},{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'}],
+L3:[{name:'Школа 21',format:'программа',url:''},{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''}]
+},
+'Использует продуктовое мышление':{
+L1:[{name:'Профили целевой аудитории. Как понять потребности своих клиентов',format:'практикум',url:'https://afisha-university.rt.ru/afisha'},{name:'Проверка гипотез улучшения пользовательского опыта',format:'практикум',url:''},{name:'Введение в продуктовый менеджмент',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7271136818193651942'}],
+L2:[{name:'Экспертный интенсив «Продуктовый подход»',format:'практикум',url:''},{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Метрики и экономика продукта',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=6882783666411019486'}],
+L3:[{name:'Экспертный интенсив «Продуктовый подход»',format:'практикум',url:''}]
+},
+'Работает с данными':{
+L1:[{name:'Бизнес-симуляция «Точка найма: принятие решений на данных»',format:'практикум',url:''},{name:'Кейс-практикум. Принятие решений на данных',format:'практикум',url:''},{name:'Статистика помогает',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7286395422010599564'},{name:'Data Talks: о чём говорят данные?',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=compound_program&object_id=7270987373153834424'}],
+L2:[{name:'Школа 21',format:'программа',url:''},{name:'IMBA',format:'программа',url:'https://afisha-university.rt.ru/imba'},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Визуализация данных в управленческих дашбордах',format:'курс',url:'https://university.rt.ru/view_doc.html?mode=course&object_id=7293470111164268728'}],
+L3:[{name:'Школа 21',format:'программа',url:''},{name:'Генеральный директор (программа развития)',format:'программа',url:''},{name:'Блюпринт — лидерская программа',format:'программа',url:'https://afisha-university.rt.ru/blueprint'},{name:'Пульс региона (программа)',format:'программа',url:''}]
+}
+};
+
+// ============ LOCAL STORAGE ============
+
+function getUserName(){return 'Методист'}
+
+// Stage card open state helpers
+function getStageOpenKey(sid){return 'ir_stage_open_'+sid}
+function isStageOpen(sid){try{var v=localStorage.getItem(getStageOpenKey(sid));return v===null?false:v==='1'}catch(e){return false}}
+function saveStageOpen(sid,open){try{localStorage.setItem(getStageOpenKey(sid),open?'1':'0')}catch(e){}}
+
+// Action field helpers
+function getActionCheckKey(sid,ai){return 'ir_act_done_'+sid+'_'+ai}
+function isActionChecked(sid,ai){try{return localStorage.getItem(getActionCheckKey(sid,ai))==='1'}catch(e){return false}}
+function toggleActionCheck(sid,ai){
+try{
+const k=getActionCheckKey(sid,ai);
+const v=localStorage.getItem(k);
+if(v==='1')localStorage.removeItem(k);else localStorage.setItem(k,'1');
+renderStages();
+}catch(e){}
+}
+function getActionTextKey(sid,ai){return 'ir_act_text_'+sid+'_'+ai}
+function loadActionText(sid,ai){try{return localStorage.getItem(getActionTextKey(sid,ai))||''}catch(e){return ''}}
+function saveActionField(sid,ai,val){
+try{
+localStorage.setItem(getActionTextKey(sid,ai),val);
+}catch(e){}
+}
+
+
+
+// ============ RENDER ============
+
+function switchTab(name){
+try{
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+const btn=document.querySelector('.tab[data-tab="'+name+'"]');
+const panel=document.getElementById('tab-'+name);
+if(btn)btn.classList.add('active');
+if(panel)panel.classList.add('active');
+}catch(e){console.error('switchTab error:',e)}
+}
+
+function renderStages(){
+try{
+const container=document.getElementById('stagesContainer');
+if(!container)return;
+ let total=0,done=0;
+ container.innerHTML=STAGES.map(s=>{
+ let aDone=0;
+ s.actions.forEach((_,ai)=>{if(isActionChecked(s.id,ai))aDone++});
+ total+=s.actions.length;
+ done+=aDone;
+ const pct=s.actions.length?Math.round(aDone/s.actions.length*100):0;
+ return '<div class="stage-card'+(isStageOpen(s.id)?' open':'')+'" data-stage="'+s.id+'"><div class="stage-header" onclick="var c=this.closest(\'.stage-card\');c.classList.toggle(\'open\');saveStageOpen('+s.id+',c.classList.contains(\'open\'))"><div class="stage-num">'+s.id+'</div><div class="stage-info"><div class="stage-title">'+esc(s.title)+'</div><div class="stage-meta"><span>\u23F1 '+esc(s.duration)+'</span><span>\uD83D\uDC64 '+esc(s.resp)+'</span></div></div><div class="stage-progress"><div class="pct">'+pct+'%</div><div class="bar"><div class="fill" style="width:'+pct+'%"></div></div></div><div class="stage-chevron">\u25BE</div></div><div class="stage-body"><h4>Описание</h4><p>'+esc(s.desc)+'</p><h4>Действия</h4>'+s.actions.map((a,ai)=>{
+ const ach=isActionChecked(s.id,ai);
+ const atxt=loadActionText(s.id,ai)||a;
+ return '<div class="stage-action'+(ach?' done':'')+'"><div class="stage-action-header"><div class="stage-action-check" onclick="toggleActionCheck('+s.id+','+ai+')"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6l3 3 5-5"/></svg></div><span class="stage-action-num">'+(ai+1)+'</span><textarea class="stage-action-field" rows="2" placeholder="'+esc(a)+'" oninput="saveActionField('+s.id+','+ai+',this.value)">'+esc(atxt)+'</textarea></div></div>';
+ }).join('')+(s.tools?'<h4>Инструменты</h4><p>'+esc(s.tools)+'</p>':'')+'<div class="resp">\u2705 Ответственный: '+esc(s.resp)+'</div><div class="result">\uD83C\uDF1F Результат: '+esc(s.result)+'</div></div></div>';
+ }).join('');
+ document.getElementById('totalBar').innerHTML=STAGES.map(s=>{
+ let aDone=0;
+ s.actions.forEach((_,ai)=>{if(isActionChecked(s.id,ai))aDone++});
+ const pct=s.actions.length?aDone/s.actions.length:0;
+ const cls=pct===1?'complete':pct>0?'partial':'empty';
+ const w=100/STAGES.length;
+ return '<div class="seg '+cls+'" style="width:'+w+'%"></div>';
+ }).join('');
+ const pctAll=total?Math.round(done/total*100):0;
+ document.getElementById('progressLabel').textContent=done+' из '+total+' задач';
+ document.getElementById('progressPct').textContent=pctAll+'%';
+}catch(e){console.error('renderStages error:',e)}
+}
+
+function renderBrief(){
+try{
+const container=document.getElementById('briefContainer');
+if(!container)return;
+const saved=JSON.parse(localStorage.getItem('ir_brief_data')||'{}');
+container.innerHTML=BRIEF_BLOCKS.map(b=>{
+return '<div class="brief-block"><div class="brief-header" onclick="this.closest(\'.brief-block\').classList.toggle(\'open\')" style="cursor:pointer"><span class="brief-num">'+b.num+'</span><h3>'+esc(b.title)+'</h3>'+(b.notes?'<span style="font-size:11px;color:var(--orange);font-weight:500;background:var(--orange-light);padding:2px 8px;border-radius:4px">'+esc(b.notes)+'</span>':'')+'<span class="brief-chevron">\u25BE</span></div><div class="brief-body">'+(b.notes?'<div style="font-size:12px;color:var(--orange);margin-bottom:8px;font-style:italic">'+esc(b.notes)+'</div>':'')+b.questions.map((q,qi)=>{const val=saved['brief_'+b.num+'_'+qi]||'';return '<div class="q" style="margin-bottom:4px">'+esc(q)+'</div><textarea class="brief-field" id="brief_'+b.num+'_'+qi+'" placeholder="Ответ..." oninput="saveBriefField('+b.num+','+qi+')" style="min-height:40px;margin-bottom:10px">'+esc(val)+'</textarea>';}).join('')+'<button class="brief-copy-btn" onclick="copyBriefBlock(this,'+b.num+')">\uD83D\uDCCB Копировать блок</button></div></div>';
+}).join('');
+}catch(e){console.error('renderBrief error:',e)}
+}
+
+function saveBriefField(blockNum,qIdx){
+try{
+const val=document.getElementById('brief_'+blockNum+'_'+qIdx).value;
+const saved=JSON.parse(localStorage.getItem('ir_brief_data')||'{}');
+saved['brief_'+blockNum+'_'+qIdx]=val;
+localStorage.setItem('ir_brief_data',JSON.stringify(saved));
+}catch(e){}
+}
+
+function renderInstruction(){
+try{
+const container=document.getElementById('instructionContainer');
+const nav=document.getElementById('instNav');
+if(!container||!nav)return;
+let allSteps=[];
+INSTRUCTION_PARTS.forEach(p=>{if(p.steps)p.steps.forEach(s=>allSteps.push(s))});
+
+nav.innerHTML='<button class="inav-btn active" onclick="scrollToInstStep(0,this)">Принципы</button>'+
+allSteps.map((s,i)=>'<button class="inav-btn" onclick="scrollToInstStep('+(i+1)+',this)">'+(s.time?esc(s.time):'')+' '+esc(s.title)+'</button>').join('');
+
+let html='';
+
+// Principles - collapsible card
+html+='<div class="inst-principles-card" id="instPrinciples"><div class="inst-principles-header" onclick="this.closest(\'.inst-principles-card\').classList.toggle(\'open\')"><strong>Основные принципы</strong><span class="chevron">▾</span></div><div class="inst-principles-body">';
+INSTRUCTION_PARTS.forEach(p=>{
+if(p.principles){
+html+=p.principles.map(pr=>'<div class="principle-item"><strong>'+esc(pr.title)+'</strong><p>'+esc(pr.desc)+'</p></div>').join('');
+}
+});
+html+='</div></div>';
+
+// Steps - accordion
+INSTRUCTION_PARTS.forEach(p=>{
+html+='<div class="inst-part"><div class="inst-part-header"><h3>'+esc(p.title)+'</h3></div><div class="inst-part-body">';
+if(p.steps){
+p.steps.forEach((s,si)=>{
+html+='<div class="inst-step" data-step-id="'+s.id+'">'+
+'<div class="inst-step-header" onclick="this.closest(\'.inst-step\').classList.toggle(\'open\')">'+
+'<span class="step-num">'+(si+1)+'</span>'+
+'<span class="step-info"><strong>'+esc(s.title)+'</strong>'+(s.time?' <span class="step-time">('+esc(s.time)+')</span>':'')+'</span>'+
+'<span class="chevron">▸</span></div>'+
+'<div class="inst-step-body">';
+if(s.goal)html+='<div class="step-goal">Цель: '+esc(s.goal)+'</div>';
+html+='<div class="step-do">'+esc(s.do)+'</div>';
+if(s.script)html+='<button class="script-toggle" onclick="event.stopPropagation();this.nextElementSibling.classList.toggle(\'show\');this.textContent=this.nextElementSibling.classList.contains(\'show\')?\'Скрипт ▲\':\'Скрипт ▼\'">Скрипт ▼</button><div class="step-script">'+esc(s.script)+'</div>';
+if(s.fix)html+='<div class="step-fix">Фиксировать в брифе: '+esc(s.fix)+'</div>';
+if(s.note)html+='<div class="step-note">'+esc(s.note)+'</div>';
+html+='</div></div>';
+});
+}
+html+='</div></div>';
+});
+
+container.innerHTML=html;
+}catch(e){console.error('renderInstruction error:',e)}
+}
+
+function scrollToInstStep(idx,btn){
+document.querySelectorAll('.inav-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+if(idx===0){
+document.getElementById('instPrinciples').scrollIntoView({behavior:'smooth',block:'start'});
+}else{
+const steps=document.querySelectorAll('.inst-step');
+if(steps[idx-1]){
+steps[idx-1].classList.add('open');
+steps[idx-1].scrollIntoView({behavior:'smooth',block:'start'});
+}
+}
+}
+
+function esc(s){if(!s)return '';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+async function copyPromptText(btn,text){
+try{await navigator.clipboard.writeText(text)}catch(e){return}
+btn.classList.add('copied');btn.textContent='Скопировано';
+setTimeout(()=>{btn.classList.remove('copied');btn.textContent='Копировать'},2000);
+}
+
+function renderPrompts(){
+try{
+const container=document.getElementById('promptsContainer');
+if(!container)return;
+
+let html='<div class="prompts-intro"><h2>Промпты для работы с брифом и аналитической запиской</h2><p>Готовые промпты для каждого этапа беседы, а также специальные промпты для переноса интервью в бриф и составления аналитической записки на основе модели навыков Ростелекома.</p></div>';
+
+// Stage prompts
+html+='<div class="prompts-section"><div class="prompts-section-title">Промпты по этапам инструкции</div>';
+const stepOrder=['p1s1','p1s2','p1s3','p1s4','p1s5','p2s1','p2s2','p2s3','p2s4','p2s5','p2s6','p2s7','p2s8','p2s9','p3s1','p3s2','p4s1','p5s1','p6s1'];
+stepOrder.forEach((id,i)=>{
+const sp=STAGE_PROMPTS[id];
+if(!sp)return;
+html+='<div class="prompt-card"><div class="prompt-header" onclick="this.closest(\'.prompt-card\').classList.toggle(\'open\')"><span class="prompt-num">'+(i+1)+'</span><span class="prompt-title">'+esc(sp.title)+'</span><span class="prompt-chevron">▸</span></div><div class="prompt-body"><div class="prompt-text">'+esc(sp.text)+'</div><button class="prompt-copy-btn" onclick="copyPromptText(this,\''+esc(sp.text).replace(/'/g,"\\'")+'\')">Копировать</button></div></div>';
+});
+html+='</div>';
+
+// Special prompts
+html+='<div class="prompts-section"><div class="prompts-section-title">Специальные промпты</div>';
+SPECIAL_PROMPTS.forEach((sp,i)=>{
+html+='<div class="prompt-card"><div class="prompt-header" onclick="this.closest(\'.prompt-card\').classList.toggle(\'open\')"><span class="prompt-num">'+(i+1)+'</span><span class="prompt-title">'+esc(sp.title)+'</span><span class="prompt-chevron">▸</span></div><div class="prompt-body"><div class="prompt-text">'+esc(sp.text)+'</div><button class="prompt-copy-btn" onclick="copyPromptText(this,\''+esc(sp.text).replace(/'/g,"\\'")+'\')">Копировать</button></div></div>';
+});
+html+='</div>';
+
+// Analytical note structure - simplified link to dedicated tab
+html+='<div class="prompts-section"><div class="prompts-section-title">Структура аналитической записки</div><p style="font-size:13px;color:var(--text2);line-height:1.6">На основе модели навыков руководителей Ростелекома — 12 компетенций в 3 блоках: <strong style="color:#e04a1a">Результат</strong>, <strong style="color:var(--accent)">Команда</strong>, <strong style="color:#1a8a72">Технологии</strong></p><p style="font-size:13px;color:var(--text2);line-height:1.6;margin-top:8px">Заполните поля и скачайте DOC на вкладке <button class="btn btn-accent btn-sm" onclick="switchTab(\'analytical-note\')" style="font-size:12px;padding:4px 12px;cursor:pointer">Аналитическая записка</button></p></div>';
+
+container.innerHTML=html;
+}catch(e){console.error('renderPrompts error:',e)}
+}
+
+// ============ ANALYTICAL NOTE ============
+
+function renderAnalyticalNote(){
+try{
+const container=document.getElementById('analyticalNoteContainer');
+if(!container)return;
+const saved=JSON.parse(localStorage.getItem('ir_note_data')||'{}');
+let html='<div class="note-form-intro"><div><h2 style="font-size:16px;color:var(--navy-dark);margin-bottom:6px">Аналитическая записка</h2><p>Заполните разделы — каждый пункт структуры на основе модели навыков Ростелекома. Редактируемые поля сохраняются автоматически. После заполнения скачайте DOC-файл или презентацию для отправки сотруднику и руководителю.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-accent" onclick="exportAnalyticalNoteDoc()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Скачать DOC</button><button class="btn btn-yellow" onclick="exportPresentationPDF()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Скачать презентацию в DOC</button></div></div>';
+
+// Skills overview by level
+html+='<div class="skills-overview"><div style="font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:10px">Навыки по уровням руководителей</div><div class="skills-level-grid">';
+['L1','L2','L3'].forEach(lv=>{
+const l=SKILLS_BY_LEVEL[lv];
+html+='<div class="skills-level-card"><div class="skills-level-header '+lv.toLowerCase()+'"><span class="skills-level-badge '+lv.toLowerCase()+'">'+lv+'</span><span class="skills-level-title">'+l.title+'</span><span class="skills-level-sub">'+l.sub+'</span></div><div class="skills-level-body">';
+l.blocks.forEach(b=>{
+html+='<div class="skills-block"><div class="skills-block-name '+b.cls+'">'+b.name+'</div>';
+b.comps.forEach(c=>{
+html+='<div class="skills-comp"><div class="skills-comp-name">'+esc(c.name)+'</div><div class="skills-comp-tags">'+c.skills.map(s=>'<span class="skills-comp-tag">'+esc(s)+'</span>').join('')+'</div></div>';
+});
+html+='</div>';
+});
+html+='</div></div>';
+});
+html+='</div></div>';
+
+// Form cards
+ANALYTICAL_NOTE_STRUCTURE.forEach(ns=>{
+const val=saved['ns_'+ns.num]||'';
+html+='<div class="note-form-card open"><div class="note-form-header" onclick="this.closest(\'.note-form-card\').classList.toggle(\'open\')"><h3>'+(ns.num<10?'0':'')+ns.num+'. '+ns.title+'</h3><span class="note-form-chevron">▾</span></div><div class="note-form-body">'+
+(ns.tags&&ns.tags.length?'<div class="note-form-comp-grid">'+ns.tags.map(t=>'<span class="note-form-comp-tag '+(ns.tagClass||'')+'">'+esc(t)+'</span>').join('')+'</div>':'')+
+'<div class="note-form-desc">'+ns.desc+'</div>'+
+'<textarea id="noteField_'+ns.num+'" placeholder="Введите текст раздела..." oninput="saveNoteField('+ns.num+')">'+(ns.num===9?'':esc(val))+'</textarea>'+
+(ns.num===9?renderTrainingPicker():'')+
+'</div></div>';
+});
+html+='</div>';
+container.innerHTML=html;
+}catch(e){console.error('renderAnalyticalNote error:',e)}
+}
+
+function saveNoteField(num){
+try{
+const val=document.getElementById('noteField_'+num).value;
+const saved=JSON.parse(localStorage.getItem('ir_note_data')||'{}');
+saved['ns_'+num]=val;
+localStorage.setItem('ir_note_data',JSON.stringify(saved));
+}catch(e){}
+}
+
+function renderTrainingPicker(){
+var opts=[{label:'Результат',cls:'result',comps:['Создаёт лучший опыт','Ищет новые смыслы','Принимает комплексные решения','Мыслит завтрашним днём','Лидирует изменения']},{label:'Команда',cls:'team',comps:['Берёт ответственность','Развивается и развивает','Сотрудничает с коллегами','Управляет потенциалом команды']},{label:'Технологии',cls:'tech',comps:['Внедряет технологии','Использует продуктовое мышление','Работает с данными']}];
+var h='<div class="training-picker"><div class="training-picker-title">Рекомендованные обучения по компетенциям</div><select class="training-select" onchange="showTrainings(this.value)"><option value="">— Выберите компетенцию —</option>';
+opts.forEach(function(g){h+='<optgroup label="'+g.label+'">';g.comps.forEach(function(c){h+='<option value="'+c.replace(/'/g,"\\'")+'">'+c+'</option>'});h+='</optgroup>'});
+h+='</select><div id="trainingResults" class="training-results"><div class="training-empty">Выберите компетенцию, чтобы увидеть рекомендованные обучения</div></div><div id="trainingRouteContainer" class="training-route" style="display:none"><div class="training-route-title">Маршрут развития</div><div id="trainingRouteBody" class="training-route-empty">Добавьте обучения в план, чтобы сформировать маршрут</div></div></div>';
+return h;
+}
+
+function showTrainings(compName){
+var container=document.getElementById('trainingResults');
+if(!container)return;
+if(!compName||!TRAININGS_DATA[compName]){container.innerHTML='<div class="training-empty">Выберите компетенцию, чтобы увидеть рекомендованные обучения</div>';return;}
+var levels=TRAININGS_DATA[compName];
+var selected=getSelectedTrainings();
+var total=0;['L1','L2','L3'].forEach(function(lv){total+=levels[lv]?levels[lv].length:0});
+var h='<div class="training-count">Найдено обучений: '+total+'</div>';
+['L1','L2','L3'].forEach(function(lv){
+var items=levels[lv];
+if(!items||!items.length)return;
+h+='<div class="training-level-group"><span class="training-level-badge '+lv.toLowerCase()+'">'+lv+'</span></div>';
+for(var i=0;i<items.length;i++){
+var t=items[i];
+var isSel=selected.some(function(s){return s.name===t.name&&s.comp===compName&&s.level===lv});
+var btnHtml=isSel?'<button class="training-remove-btn" onclick="removeFromPlan(this)" data-name="'+esc(t.name).replace(/"/g,'&quot;')+'" data-comp="'+esc(compName).replace(/"/g,'&quot;')+'" data-level="'+lv+'" title="Убрать из плана">✕</button>':'<button class="training-add-btn" onclick="addTrainingToPlan(this)" data-name="'+esc(t.name).replace(/"/g,'&quot;')+'" data-comp="'+esc(compName).replace(/"/g,'&quot;')+'" data-level="'+lv+'" data-format="'+esc(t.format).replace(/"/g,'&quot;')+'" data-url="'+(t.url||'').replace(/"/g,'&quot;')+'" title="Добавить в план">+</button>';
+h+='<div class="training-item"><span class="training-format '+t.format.split(' ').join('_')+'">'+t.format+'</span><span class="training-name">'+esc(t.name)+'</span><a class="training-link" href="'+(t.url||'https://afisha-university.rt.ru/')+'" target="_blank">Открыть</a>'+btnHtml+'</div>';
+}
+});
+container.innerHTML=h;
+}
+
+function getSelectedTrainings(){
+try{return JSON.parse(localStorage.getItem('ir_selected_trainings')||'[]')}catch(e){return []}
+}
+function saveSelectedTrainings(arr){
+localStorage.setItem('ir_selected_trainings',JSON.stringify(arr));
+}
+function addTrainingToPlan(btn){
+var name=btn.dataset.name;
+var comp=btn.dataset.comp;
+var level=btn.dataset.level;
+var format=btn.dataset.format;
+var url=btn.dataset.url;
+var selected=getSelectedTrainings();
+var exists=selected.some(function(s){return s.name===name&&s.comp===comp&&s.level===level});
+if(exists)return;
+selected.push({name:name,comp:comp,level:level,format:format,url:url});
+saveSelectedTrainings(selected);
+rebuildSection9();
+var container=document.getElementById('trainingResults');
+if(container)showTrainings(document.querySelector('.training-select').value);
+}
+function removeFromPlan(btn){
+var name=btn.dataset.name;
+var comp=btn.dataset.comp;
+var level=btn.dataset.level;
+var selected=getSelectedTrainings().filter(function(s){return!(s.name===name&&s.comp===comp&&s.level===level)});
+saveSelectedTrainings(selected);
+rebuildSection9();
+var container=document.getElementById('trainingResults');
+if(container)showTrainings(document.querySelector('.training-select').value);
+}
+function rebuildSection9(){
+var ta=document.getElementById('noteField_9');
+if(!ta)return;
+var selected=getSelectedTrainings();
+if(!selected||!selected.length){
+ta.value='';
+renderRouteTable([]);
+var evt=document.createEvent('Event');evt.initEvent('input',true,true);ta.dispatchEvent(evt);
+saveNoteField(9);
+return;
+}
+var blocks=[{label:'Результат',cls:'result',comps:['Создаёт лучший опыт','Ищет новые смыслы','Принимает комплексные решения','Мыслит завтрашним днём','Лидирует изменения']},{label:'Команда',cls:'team',comps:['Берёт ответственность','Развивается и развивает','Сотрудничает с коллегами','Управляет потенциалом команды']},{label:'Технологии',cls:'tech',comps:['Внедряет технологии','Использует продуктовое мышление','Работает с данными']}];
+var formatOrder={курс:1,практикум:2,трек:3,программа:4,'онлайн-программа':4};
+var lines=[];
+blocks.forEach(function(block){
+var compsInBlock=[];
+block.comps.forEach(function(comp){
+var items=selected.filter(function(s){return s.comp===comp});
+if(!items.length)return;
+items.sort(function(a,b){return (formatOrder[a.format]||9)-(formatOrder[b.format]||9)});
+compsInBlock.push({comp:comp,items:items});
+});
+if(!compsInBlock.length)return;
+lines.push('=== '+block.label+' ===');
+compsInBlock.forEach(function(cb){
+lines.push('— '+cb.comp+':');
+cb.items.forEach(function(t){
+var lvl='('+t.level+')';
+var link=t.url?' ('+t.url+')':'';
+lines.push('  • ['+t.format+'] '+t.name+link+' '+lvl);
+});
+lines.push('');
+});
+});
+ta.value=lines.join('\n');
+renderRouteTable(selected);
+var evt=document.createEvent('Event');evt.initEvent('input',true,true);ta.dispatchEvent(evt);
+saveNoteField(9);
+}
+function renderRouteTable(selected){
+var container=document.getElementById('trainingRouteContainer');
+var body=document.getElementById('trainingRouteBody');
+if(!container||!body){return}
+if(!selected||!selected.length){container.style.display='none';return}
+container.style.display='block';
+var formatOrder={курс:1,практикум:2,трек:3,программа:4,'онлайн-программа':4};
+var sorted=[].concat(selected).sort(function(a,b){return (formatOrder[a.format]||9)-(formatOrder[b.format]||9)});
+var blocks={result:['Создаёт лучший опыт','Ищет новые смыслы','Принимает комплексные решения','Мыслит завтрашним днём','Лидирует изменения'],team:['Берёт ответственность','Развивается и развивает','Сотрудничает с коллегами','Управляет потенциалом команды'],tech:['Внедряет технологии','Использует продуктовое мышление','Работает с данными']};
+function getBlock(comp){for(var k in blocks){if(blocks[k].indexOf(comp)>=0)return k}return ''}
+var h='<table class="training-route-table"><thead><tr><th>№</th><th>Формат</th><th>Название</th><th>Компетенция</th><th>Ссылка</th><th>Примечание</th></tr></thead><tbody>';
+for(var i=0;i<sorted.length;i++){
+var t=sorted[i];
+var formatLabel=t.format;
+var formatBadge='<span class="training-format '+t.format.split(' ').join('_')+'" style="font-size:10px;display:inline">'+formatLabel+'</span>';
+var linkHtml=t.url?'<a href="'+esc(t.url)+'" target="_blank">Открыть</a>':'—';
+var note='';
+if(t.format==='программа'||t.format==='онлайн-программа')note='Требуется отбор, длительность 2–6 мес.';
+h+='<tr><td class="td-num">'+(i+1)+'</td><td class="td-format">'+formatBadge+'</td><td class="td-name">'+esc(t.name)+'</td><td>'+esc(t.comp)+' ('+t.level+')</td><td class="td-link">'+linkHtml+'</td><td class="td-note">'+note+'</td></tr>';
+}
+h+='</tbody></table>';
+body.innerHTML=h;
+}
+
+function exportPresentationPDF(){
+try{
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+var val=function(num){return (document.getElementById('noteField_'+num)||{}).value||''};
+var d=new Date().toLocaleDateString('ru-RU');
+var name=document.getElementById('userName').value||'Методист';
+
+var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><title>Рекомендации по индивидуальному развитию</title><style>\
+*{margin:0;padding:0;box-sizing:border-box}\
+body{font-family:"Segoe UI",Arial,sans-serif;background:#e8ecf3;color:#1e293b}\
+.slide{width:794px;min-height:530px;margin:24px auto;background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.12);padding:40px 48px;position:relative;overflow:hidden;page-break-after:always;break-inside:avoid}\
+.slide-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #6600FF}\
+.slide-header .logo{width:28px;height:28px;border-radius:6px;background:#6600FF;display:flex;align-items:center;justify-content:center;flex-shrink:0}\
+.slide-header .logo svg{width:16px;height:16px}\
+.slide-header .brand{font-size:11px;color:#5a6a7e;font-weight:600;text-transform:uppercase;letter-spacing:.04em}\
+.slide-header .brand span{color:#6600FF}\
+.slide h1{font-size:28px;font-weight:700;color:#002060;line-height:1.2;margin-bottom:6px}\
+.slide h2{font-size:18px;font-weight:600;color:#263B63;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e2e6ef}\
+.slide .sub{font-size:14px;color:#5a6a7e;margin-bottom:20px;line-height:1.5}\
+.slide .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;background:#f7f8fb;padding:16px 20px;border-radius:8px;margin-bottom:16px}\
+.slide .meta-item{font-size:13px}\
+.slide .meta-item .lbl{color:#5a6a7e;font-size:11px;display:block}\
+.slide .meta-item .val{font-weight:600;color:#1e293b}\
+.slide p{font-size:13px;line-height:1.6;color:#1e293b;margin-bottom:10px;white-space:pre-wrap}\
+.slide ul{padding-left:18px;margin-bottom:10px}\
+.slide ul li{font-size:13px;line-height:1.6;color:#1e293b;margin-bottom:4px}\
+.slide .tag{display:inline-flex;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600;margin:2px}\
+.slide .tag.result{background:rgba(255,94,46,.1);color:#e04a1a}\
+.slide .tag.team{background:rgba(102,0,255,.1);color:#6600FF}\
+.slide .tag.tech{background:rgba(87,217,184,.15);color:#1a8a72}\
+.slide .footer-note{position:absolute;bottom:24px;left:48px;right:48px;font-size:10px;color:#8b95a5;border-top:1px solid #e2e6ef;padding-top:10px;text-align:center}\
+.title-slide{text-align:center;padding-top:80px}\
+.title-slide h1{font-size:32px;margin-bottom:12px}\
+.title-slide .sub{font-size:16px;margin-bottom:32px}\
+.title-slide .meta{background:transparent;padding:0;display:block;text-align:center}\
+.title-slide .meta-item{font-size:14px;margin-bottom:6px}\
+.title-slide .meta-item .lbl{display:inline;font-size:13px}\
+.title-slide .footer-note{bottom:32px}\
+.slide .route-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}\
+.slide .route-table th{padding:5px 6px;text-align:left;background:#f0edff;border-bottom:2px solid #6600FF;font-weight:600;color:#263B63;font-size:10px;text-transform:uppercase;letter-spacing:.03em}\
+.slide .route-table td{padding:5px 6px;border-bottom:1px solid #e2e6ef;vertical-align:middle;font-size:11px}\
+.slide .route-table tr:last-child td{border-bottom:none}\
+.slide .route-table .td-num{width:24px;text-align:center;color:#8b95a5;font-weight:600;font-size:10px}\
+.slide .route-table .td-link a{color:#6600FF;text-decoration:none;font-size:10px}\
+.slide .route-table .td-link a:hover{text-decoration:underline}\
+.slide .route-table .td-note{font-size:10px;color:#8b95a5;font-style:italic}\
+.slide .tf{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;white-space:nowrap}\
+.slide .tf.курс{background:rgba(87,217,184,.12);color:#1a8a72}\
+.slide .tf.практикум{background:rgba(255,79,18,.1);color:#e04a1a}\
+.slide .tf.трек{background:rgba(255,191,7,.15);color:#8a6b00}\
+.slide .tf.программа{background:rgba(102,0,255,.15);color:#6600FF}\
+.slide .tf.онлайн-программа{background:rgba(102,0,255,.1);color:#6600FF}\
+@media print{body{background:#fff}.slide{box-shadow:none;border-radius:0;margin:0;width:100%;min-height:100vh;padding:48px 56px}@page{margin:0;size:A4 portrait}}\
+</style></head><body>';
+
+// Slide 1: Title
+html+='<div class="slide title-slide"><div class="slide-header" style="justify-content:center;border-bottom:none"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h1>Рекомендации по&nbsp;индивидуальному развитию</h1><div class="sub">подготовлено на основе брифа и&nbsp;анализа компетенций</div><div class="meta"><div class="meta-item"><span class="lbl">Дата: </span><span class="val">'+d+'</span></div><div class="meta-item"><span class="lbl">Методист: </span><span class="val">'+esc(name)+'</span></div></div><div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+
+// Slide 2: Introduction (section 1)
+var v1=val(1);
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>1. Введение</h2>'+(v1?'<p>'+esc(v1)+'</p>':'<p style="color:#8b95a5">Данные не заполнены</p>')+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+
+// Slide 3: Employee info (section 2)
+var v2=val(2);
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>2. Информация о сотруднике</h2>'+(v2?'<p>'+esc(v2)+'</p>':'<p style="color:#8b95a5">Данные не заполнены</p>')+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+
+// Slide 4: Priority directions (section 8)
+var v8=val(8);
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>3. Приоритетные направления развития</h2>'+(v8?'<p>'+esc(v8)+'</p>':'<p style="color:#8b95a5">Данные не заполнены</p>')+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+
+// Slide 5: Action plan (section 9) — rendered as sorted table
+var selectedTrainings=[];
+try{selectedTrainings=JSON.parse(localStorage.getItem('ir_selected_trainings')||'[]')}catch(e){}
+if(selectedTrainings.length){
+var fmtOrder={курс:1,практикум:2,трек:3,программа:4,'онлайн-программа':4};
+var sorted=[].concat(selectedTrainings).sort(function(a,b){return (fmtOrder[a.format]||9)-(fmtOrder[b.format]||9)});
+var tbl='<table class="route-table"><thead><tr><th>№</th><th>Формат</th><th>Название</th><th>Компетенция</th><th>Ссылка</th><th>Примечание</th></tr></thead><tbody>';
+for(var ri=0;ri<sorted.length;ri++){
+var tr=sorted[ri];
+var tn=tr.format==='программа'||tr.format==='онлайн-программа'?'Требуется отбор, 2–6 мес.':'';
+tbl+='<tr><td class="td-num">'+(ri+1)+'</td><td><span class="tf '+tr.format.split(' ').join('_')+'">'+tr.format+'</span></td><td>'+esc(tr.name)+'</td><td>'+esc(tr.comp)+' ('+tr.level+')</td><td class="td-link">'+(tr.url?'<a href="'+esc(tr.url)+'" target="_blank">Открыть</a>':'—')+'</td><td class="td-note">'+tn+'</td></tr>';
+}
+tbl+='</tbody></table>';
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>4. План первоочередных действий</h2><p style="font-size:11px;color:#5a6a7e;margin-bottom:6px">Рекомендуемая последовательность: курс → практикум → трек → программа</p>'+tbl+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+} else {
+function linkify(s){return s.replace(/(https?:\/\/[^\s<)]+)/g,'<a href="$1" target="_blank" style="color:#6600FF;text-decoration:underline">$1</a>')}
+var v9=val(9);
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>4. План первоочередных действий</h2>'+(v9?'<p>'+linkify(esc(v9))+'</p>':'<p style="color:#8b95a5">Данные не заполнены</p>')+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+}
+
+// Slide 6: Conclusion (section 11)
+var v11=val(11);
+html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>5. Заключение</h2>'+(v11?'<p>'+esc(v11)+'</p>':'<p style="color:#8b95a5">Данные не заполнены</p>')+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
+
+html+='</body></html>';
+
+var blob=new Blob([html],{type:'application/msword'});
+var url=URL.createObjectURL(blob);
+var a=document.createElement('a');
+a.href=url;
+a.download='prezentatsiya_IR_'+d.replace(/\./g,'_')+'.doc';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+setTimeout(function(){URL.revokeObjectURL(url)},10000);
+}catch(e){console.error('exportPresentationPDF error:',e);alert('Ошибка при создании презентации: '+e.message)}
+}
+
+function exportAnalyticalNoteDoc(){
+try{
+const date=new Date().toLocaleDateString('ru-RU');
+const sections=ANALYTICAL_NOTE_STRUCTURE.map(ns=>{
+const val=(document.getElementById('noteField_'+ns.num)||{}).value||'';
+return '<h2>'+(ns.num<10?'0':'')+ns.num+'. '+ns.title+'</h2>'+
+(ns.tags&&ns.tags.length?'<p style="color:#666;font-size:11px"><em>Компетенции: '+ns.tags.join(', ')+'</em></p>':'')+
+'<p style="margin:4px 0 12px;white-space:pre-wrap">'+esc(val)+'</p>';
+}).join('');
+const docHtml='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>body{font-family:Calibri,sans-serif;font-size:12pt;color:#1e293b;max-width:800px;margin:40px auto}h1{color:#002060;font-size:20pt;border-bottom:2px solid #6600FF;padding-bottom:8px}h2{color:#263B63;font-size:14pt;margin-top:20px;background:#f0edff;padding:6px 12px}p{margin:6px 0 16px;line-height:1.5}em{color:#FF4F12;font-style:normal}.header{text-align:center;margin-bottom:28px;color:#5a6a7e;font-size:10pt}</style></head><body>'+
+'<div class="header">Аналитическая записка — рекомендации по индивидуальному развитию<br>Дата: '+date+'</div>'+
+'<h1>Аналитическая записка: Рекомендации по индивидуальному развитию</h1>'+sections+
+'<p style="margin-top:40px;color:#999;font-size:9pt;text-align:center">Сгенерировано — Ростелеком. Модель навыков руководителей: 12 компетенций, 3 блока (Результат, Команда, Технологии), 3 уровня (L1/L2/L3)</p>'+
+'</body></html>';
+const blob=new Blob([docHtml],{type:'application/msword'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;a.download='Аналитическая_записка_ИР_'+date.replace(/\./g,'_')+'.doc';
+document.body.appendChild(a);a.click();
+setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},1000);
+}catch(e){console.error('exportAnalyticalNoteDoc error:',e)}
+}
+
+// ============ COPY ============
+
+async function copyBriefBlock(btn,blockNum){
+const block=BRIEF_BLOCKS.find(b=>b.num===blockNum);
+if(!block)return;
+const text=block.title+'\n'+block.questions.map(q=>'• '+q).join('\n');
+try{await navigator.clipboard.writeText(text)}catch(e){return}
+btn.classList.add('copied');btn.textContent='✓ Скопировано';
+setTimeout(()=>{btn.classList.remove('copied');btn.textContent='📋 Копировать блок'},2000);
+}
+
+// ============ DOC EXPORT ============
+
+function exportBriefDoc(){
+const name=document.getElementById('userName').value||'___________________';
+const date=new Date().toLocaleDateString('ru-RU');
+const saved=JSON.parse(localStorage.getItem('ir_brief_data')||'{}');
+const blocks=BRIEF_BLOCKS.map(b=>{
+return '<h2>'+b.num+'. '+b.title+'</h2>'+(b.notes?'<p><em>'+b.notes+'</em></p>':'')+
+b.questions.map((q,qi)=>{const val=saved['brief_'+b.num+'_'+qi]||'';return '<p><strong>• '+esc(q)+'</strong><br><span style="color:#333">'+(val?esc(val):'<span style="color:#999">___________________________</span>')+'</span></p>';}).join('');
+}).join('');
+
+const docHtml='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>body{font-family:Calibri,sans-serif;font-size:12pt;color:#1e293b;max-width:800px;margin:40px auto}h1{color:#002060;font-size:20pt;border-bottom:2px solid #6600FF;padding-bottom:8px}h2{color:#263B63;font-size:14pt;margin-top:24px;background:#f0edff;padding:6px 12px}p{margin:6px 0 16px;line-height:1.5}em{color:#FF4F12;font-style:normal}.header{text-align:center;margin-bottom:28px;color:#5a6a7e;font-size:10pt}span{font-size:10pt}</style></head><body>'+
+'<div class="header">Бриф для сбора потребности — индивидуальное развитие<br>Сотрудник: '+name+' | Дата: '+date+'</div>'+
+'<h1>Бриф: Рекомендации по индивидуальному развитию</h1>'+blocks+
+'<p style="margin-top:40px;color:#999;font-size:9pt;text-align:center">Сгенерировано — Ростелеком</p>'+
+'</body></html>';
+
+const blob=new Blob([docHtml],{type:'application/msword'});
+const url=URL.createObjectURL(blob);
+const a=document.createElement('a');
+a.href=url;a.download='Бриф_ИР_'+name.replace(/\s+/g,'_')+'.doc';
+document.body.appendChild(a);a.click();
+setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},1000);
+}
+
+// ============ INIT ============
+
+(function(){
+const _errors=[];
+window.onerror=function(msg,url,line){_errors.push(msg+' (line '+line+')');const el=document.getElementById('js-errors');if(el)el.innerHTML='<b>JS Error:</b> '+_errors.join(' | ')};
+try{
+renderStages();
+renderBrief();
+renderInstruction();
+renderPrompts();
+renderAnalyticalNote();
+rebuildSection9();
+// Clean up old section 9 text from saved data — now managed by ir_selected_trainings
+try{var nd=JSON.parse(localStorage.getItem('ir_note_data')||'{}');if(nd['ns_9']){delete nd['ns_9'];localStorage.setItem('ir_note_data',JSON.stringify(nd))}}catch(e){}
+}catch(e){console.error('init error:',e);window.onerror&&window.onerror(e.message,'init',0)}
+if(_errors.length){const el=document.getElementById('js-errors');if(el)el.innerHTML='<b>JS Error:</b> '+_errors[0]}
+})();
+</script>
+</body>
+</html>
+
