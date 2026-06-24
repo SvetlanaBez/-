@@ -1267,7 +1267,7 @@ try{
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 var val=function(num){return (document.getElementById('noteField_'+num)||{}).value||''};
 var d=new Date().toLocaleDateString('ru-RU');
-var name=document.getElementById('userName').value||'Методист';
+var name='Методист';
 
 var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><title>Рекомендации по индивидуальному развитию</title><style>\
 *{margin:0;padding:0;box-sizing:border-box}\
@@ -1407,7 +1407,7 @@ setTimeout(()=>{btn.classList.remove('copied');btn.textContent='📋 Копир�
 // ============ DOC EXPORT ============
 
 function exportBriefDoc(){
-const name=document.getElementById('userName').value||'___________________';
+const name='Методист';
 const date=new Date().toLocaleDateString('ru-RU');
 const saved=JSON.parse(localStorage.getItem('ir_brief_data')||'{}');
 const blocks=BRIEF_BLOCKS.map(b=>{
