@@ -922,11 +922,14 @@ try{
         const key='brief_'+src.block+'_'+qi;
         const val=briefData[key];
         if(val&&val.trim()){
-          parts.push('• '+block.questions[qi]+': '+val.trim());
+          if(item.section===2){
+            parts.push('• '+block.questions[qi]+': '+val.trim());
+          }else{
+            parts.push(val.trim());
+          }
         }
       });
       if(parts.length){
-        lines.push('--- '+src.label+' ---');
         lines.push(parts.join('\n'));
       }
     });
@@ -1442,7 +1445,7 @@ for(var i=0;i<sorted.length;i++){
 var t=sorted[i];
 var formatLabel=t.format;
 var formatBadge='<span class="training-format '+t.format.split(' ').join('_')+'" style="font-size:10px;display:inline">'+formatLabel+'</span>';
-var linkHtml=t.url?'<a href="'+esc(t.url)+'" target="_blank">Открыть</a>':'—';
+var linkUrl=t.url||'https://afisha-university.rt.ru/';var linkHtml='<a href="'+esc(linkUrl)+'" target="_blank">Открыть</a>';
 var note='';
 if(t.format==='программа'||t.format==='онлайн-программа')note='Требуется отбор, длительность 2–6 мес.';
 h+='<tr><td class="td-num">'+(i+1)+'</td><td class="td-format">'+formatBadge+'</td><td class="td-name">'+esc(t.name)+'</td><td>'+esc(t.comp)+' ('+t.level+')</td><td class="td-link">'+linkHtml+'</td><td class="td-note">'+note+'</td></tr>';
@@ -1535,7 +1538,7 @@ var tbl='<table class="route-table"><thead><tr><th>№</th><th>Формат</th>
 for(var ri=0;ri<sorted.length;ri++){
 var tr=sorted[ri];
 var tn=tr.format==='программа'||tr.format==='онлайн-программа'?'Требуется отбор, 2–6 мес.':'';
-tbl+='<tr><td class="td-num">'+(ri+1)+'</td><td><span class="tf '+tr.format.split(' ').join('_')+'">'+tr.format+'</span></td><td>'+esc(tr.name)+'</td><td>'+esc(tr.comp)+' ('+tr.level+')</td><td class="td-link">'+(tr.url?'<a href="'+esc(tr.url)+'" target="_blank">Открыть</a>':'—')+'</td><td class="td-note">'+tn+'</td></tr>';
+tbl+='<tr><td class="td-num">'+(ri+1)+'</td><td><span class="tf '+tr.format.split(' ').join('_')+'">'+tr.format+'</span></td><td>'+esc(tr.name)+'</td><td>'+esc(tr.comp)+' ('+tr.level+')</td><td class="td-link"><a href="'+esc(tr.url||'https://afisha-university.rt.ru/')+'" target="_blank">Открыть</a></td><td class="td-note">'+tn+'</td></tr>';
 }
 tbl+='</tbody></table>';
 html+='<div class="slide"><div class="slide-header"><div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span class="brand">Рекомендации по <span>индивидуальному развитию</span></span></div><h2>4. План первоочередных действий</h2><p style="font-size:11px;color:#5a6a7e;margin-bottom:6px">Рекомендуемая последовательность: курс → практикум → трек → программа</p>'+tbl+'<div class="footer-note">Ростелеком · Онлайн-университет · Конфиденциально</div></div>';
@@ -1567,8 +1570,34 @@ function exportAnalyticalNoteDoc(){
 try{
 const date=new Date().toLocaleDateString('ru-RU');
 const sections=ANALYTICAL_NOTE_STRUCTURE.map(ns=>{
+if(ns.num===8){
+var sel=[];
+try{sel=JSON.parse(localStorage.getItem('ir_selected_trainings')||'[]')}catch(e){}
+if(!sel||!sel.length) return '<h2>08. План первоочередных действий</h2><p style="color:#999;font-style:italic">Обучения не выбраны</p>';
+var tbl='<h2>08. План первоочередных действий</h2><table style="width:100%;border-collapse:collapse;font-size:11px;margin-top:6px">'+
+'<thead><tr style="background:#f0edff"><th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">№</th>'+
+'<th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">Формат</th>'+
+'<th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">Название</th>'+
+'<th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">Компетенция</th>'+
+'<th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">Ссылка</th>'+
+'<th style="padding:5px 6px;text-align:left;border-bottom:2px solid #6600FF;font-weight:600;font-size:10px">Примечание</th></tr></thead><tbody>';
+var fo={курс:1,практикум:2,трек:3,программа:4,'онлайн-программа':4};
+var ss=[].concat(sel).sort(function(a,b){return (fo[a.format]||9)-(fo[b.format]||9)});
+for(var ri=0;ri<ss.length;ri++){
+var tr=ss[ri];
+var tn=tr.format==='программа'||tr.format==='онлайн-программа'?'Требуется отбор, 2–6 мес.':'';
+tbl+='<tr><td style="padding:5px 6px;border-bottom:1px solid #e2e6ef;text-align:center">'+(ri+1)+'</td>'+
+'<td style="padding:5px 6px;border-bottom:1px solid #e2e6ef">'+tr.format+'</td>'+
+'<td style="padding:5px 6px;border-bottom:1px solid #e2e6ef">'+esc(tr.name)+'</td>'+
+'<td style="padding:5px 6px;border-bottom:1px solid #e2e6ef">'+esc(tr.comp)+' ('+tr.level+')</td>'+
+'<td style="padding:5px 6px;border-bottom:1px solid #e2e6ef"><a href="'+esc(tr.url||'https://afisha-university.rt.ru/')+'" target="_blank">Открыть</a></td>'+
+'<td style="padding:5px 6px;border-bottom:1px solid #e2e6ef">'+tn+'</td></tr>';
+}
+tbl+='</tbody></table>';
+return tbl;
+}
 const el=document.getElementById('noteField_'+ns.num);
-const val=el?el.value:((ns.num===8?(function(){try{var d=JSON.parse(localStorage.getItem('ir_note_data')||'{}');return d['ns_8']||''}catch(e){return ''}})():''));
+const val=el?el.value:'';
 return '<h2>'+(ns.num<10?'0':'')+ns.num+'. '+ns.title+'</h2>'+
 (ns.tags&&ns.tags.length?'<p style="color:#666;font-size:11px"><em>Компетенции: '+ns.tags.join(', ')+'</em></p>':'')+
 '<p style="margin:4px 0 12px;white-space:pre-wrap">'+esc(val)+'</p>';
@@ -1631,6 +1660,9 @@ setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},1000);
 const _errors=[];
 window.onerror=function(msg,url,line){_errors.push(msg+' (line '+line+')');const el=document.getElementById('js-errors');if(el)el.innerHTML='<b>JS Error:</b> '+_errors.join(' | ')};
 try{
+localStorage.removeItem('ir_brief_data');
+localStorage.removeItem('ir_note_data');
+localStorage.removeItem('ir_selected_trainings');
 renderStages();
 renderBrief();
 renderInstruction();
